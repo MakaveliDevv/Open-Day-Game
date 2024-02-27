@@ -12,13 +12,6 @@ public class Walking : MonoBehaviour
     public LayerMask groundLayer;
     public float groundCheckRadius = 0.1f;
 
-        // Gravity
-    // private float verticalVelocity;
-    // public float jumpForce = 10f;
-    // public float gravityForce = 20f;
-    // private bool isGrounded;
-
-
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
