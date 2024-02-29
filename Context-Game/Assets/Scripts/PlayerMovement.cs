@@ -1,82 +1,86 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     // Player
+    private Rigidbody2D rb;
     private CapsuleCollider2D capsuleCollider;
-    [SerializeField] private LayerMask layerMask;
+
     // Movement
-    private Rigidbody2D playerRB;
     public float movementSpeed;
     private Vector2 inputDirection;
 
-    // Gravity
-    public float jumpForce = 10f;
-    public float gravityForce = 20f;
-    private bool isGrounded = true;
+    // Jump
+    [Header("Jump System")]
+    public float jumpTime;
+    public int jumpForce;
+    public float fallMultiplier;
+    public float jumpMultiplier;
+
+    private bool isJumping;
+    private float jumpCounter;
+
+    private Vector2 vecGravity;
+
+    [SerializeField] private LayerMask groundLayer;
 
     void Awake()
     {
-        playerRB = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
     }
 
-    void Update()
+    void Start() 
     {
-        inputDirection = new Vector2(Input.GetAxisRaw("Horizontal"), 0f);
+        vecGravity = new(0f, -Physics2D.gravity.y);
     }
 
-    private void FixedUpdate() 
+    void Update() 
     {
-        playerRB.constraints = RigidbodyConstraints2D.FreezeRotation;
-        MovePlayer();
+        inputDirection = new(Input.GetAxisRaw("Horizontal"), 0f);
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         Jump();
+        MovePlayer();
+        
+        if(rb.velocity.y < 0.03f) 
+        {
+            rb.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
+
+            if(jumpCounter > jumpTime) 
+                isJumping = false;
+
+            rb.velocity += vecGravity * jumpMultiplier * Time.deltaTime;    
+        }
     }
 
     private void MovePlayer() 
     {
         inputDirection = transform.TransformDirection(inputDirection);
         inputDirection *= movementSpeed;
-        playerRB.velocity = inputDirection;
+                
+        rb.velocity = new(inputDirection.x, rb.velocity.y);
     }
 
     private void Jump() 
     {
-        if(IsGrounded() && Input.GetKeyDown(KeyCode.Space)) 
+        if(Input.GetButtonDown("Jump") && IsGrounded()) 
         {
-            Debug.Log("Player is jumping...");
-            playerRB.velocity = Vector2.up * jumpForce;
-            isGrounded = false;
+            rb.velocity = new(rb.velocity.x, jumpForce);
+            isJumping = true;
+            jumpCounter = 0f;
         }
     }
 
     private bool IsGrounded() 
     {
-        if (capsuleCollider == null)
-        {
-            Debug.LogError("CapsuleCollider2D is not assigned to the player object.");
-            return false;
-        }
+        Vector2 capsuleBottom = new(capsuleCollider.bounds.center.x, capsuleCollider.bounds.min.y);
+        float capsuleRadius = capsuleCollider.size.x * 0.5f;
+        float checkDistance = 0.55f; // Adjust this value as needed
 
-        float extraHeight = 0.01f;
-        RaycastHit2D raycastHit = Physics2D.Raycast(capsuleCollider.bounds.center, Vector2.down, capsuleCollider.bounds.extents.y + extraHeight, layerMask);
-        Color rayColor;
-        
-        if(raycastHit.collider != null) 
-        {
-            rayColor = Color.blue;
-            isGrounded = true;
-        } 
-        else 
-        {
-            rayColor = Color.red;    
-            isGrounded = false; // Set isGrounded to false if no ground is detected
-        }
-
-        Debug.DrawRay(capsuleCollider.bounds.center, Vector2.down * (capsuleCollider.bounds.extents.y + extraHeight), rayColor);
-        Debug.Log(raycastHit.collider);
-        return isGrounded;
+        RaycastHit2D hit = Physics2D.CircleCast(capsuleBottom, capsuleRadius, Vector2.down, checkDistance, groundLayer);
+        return hit.collider != null;
     }
 }
