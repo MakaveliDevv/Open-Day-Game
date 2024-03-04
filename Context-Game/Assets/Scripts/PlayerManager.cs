@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
    #region Singleton
 
     public static PlayerManager instance;
+    // public GameObject player;
 
     void Awake() 
     {

@@ -40,7 +40,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() 
     {
-        Debug.Log("Hi I'm lowRain");
         inputDirection = new(Input.GetAxisRaw("Horizontal"), 0f);
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         Jump();
@@ -54,14 +53,7 @@ public class PlayerMovement : MonoBehaviour
                 isJumping = false;
 
             rb.velocity += vecGravity * jumpMultiplier * Time.deltaTime;    
-        }
-
-
-        // Check if player is close to a connection point
-        // if(transform.position <= ) 
-        // {
-
-        // }
+        }      
     }
 
     private void MovePlayer() 

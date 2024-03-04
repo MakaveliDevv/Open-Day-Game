@@ -10,12 +10,17 @@ public class ConnectingPoint : MonoBehaviour
 
     void Awake() 
     {
-        targetPlayer = PlayerManager.instance.gameObject.transform;
+        // targetPlayer = PlayerManager.instance.player.transform;
+        targetPlayer = PlayerManager.instance.transform;
     }
 
     void Update() 
     {
         distance = Vector2.Distance(targetPlayer.position, transform.position);
+        if(distance <= detectionRadius) 
+        {
+            Debug.Log("Player detected!");
+        }
     }
 
     public void OnDrawGizmosSelected() 
