@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump() 
     {
-        if(Input.GetButtonDown("Jump") && IsGrounded()) 
+        if(IsGrounded() && Input.GetButtonDown("Jump")) 
         {
             rb.velocity = new(rb.velocity.x, jumpForce);
             isJumping = true;
