@@ -1865,10 +1865,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 919605087}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeedf1ee80888444984724f4cb21114a, type: 3}
+  m_Script: {fileID: 11500000, guid: b47702eee1d689a408f8ca3c343dad62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graplerGun: {fileID: 385360394}
 --- !u!1 &1107348859
 GameObject:
   m_ObjectHideFlags: 0
@@ -4558,6 +4557,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1517713255}
+  - component: {fileID: 1517713256}
   m_Layer: 0
   m_Name: ConnectPoint
   m_TagString: Untagged
@@ -4581,6 +4581,19 @@ Transform:
   - {fileID: 1751976780}
   m_Father: {fileID: 1746975166}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1517713256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517713254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 112a1184904e9da4b9fdcb800e92a5d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 3.5
 --- !u!1 &1633290421
 GameObject:
   m_ObjectHideFlags: 0
