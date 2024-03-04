@@ -54,6 +54,13 @@ public class PlayerMovement : MonoBehaviour
 
             rb.velocity += vecGravity * jumpMultiplier * Time.deltaTime;    
         }
+
+
+        // Check if player is close to a connection point
+        // if(transform.position <= ) 
+        // {
+
+        // }
     }
 
     private void MovePlayer() 
