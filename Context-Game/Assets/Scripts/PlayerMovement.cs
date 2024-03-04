@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update() 
     {
-        Debug.Log("Hi I'm lowRain");
+        Debug.Log("Hi I'm lowRain aaaaaaaaaaaaaaaaaaaaaaaaaaaaah");
         inputDirection = new(Input.GetAxisRaw("Horizontal"), 0f);
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         Jump();
