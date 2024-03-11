@@ -130,11 +130,11 @@ GameObject:
   m_Component:
   - component: {fileID: 79069526}
   - component: {fileID: 79069525}
-  - component: {fileID: 79069527}
   - component: {fileID: 79069529}
   - component: {fileID: 79069528}
-  - component: {fileID: 79069530}
   - component: {fileID: 79069531}
+  - component: {fileID: 79069532}
+  - component: {fileID: 79069533}
   m_Layer: 0
   m_Name: BridgePlayer
   m_TagString: Untagged
@@ -210,26 +210,6 @@ Transform:
   - {fileID: 1450628463}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &79069527
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79069524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88fc24a87170f9f45bbdf9a2ef0898fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movementSpeed: 4
-  jumpTime: 0.5
-  jumpForce: 5
-  fallMultiplier: 3
-  jumpMultiplier: 2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!70 &79069528
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -294,21 +274,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &79069530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 79069524}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79c55b3825c4d4e46bdae7b59f2738f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bridgeParameters: {fileID: 11400000, guid: 4cf00bb368f298844a1f14aa326ef1d6, type: 2}
-  detectionRadius: 10
-  inRangeForEndPoint: 0
 --- !u!114 &79069531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,6 +286,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47702eee1d689a408f8ca3c343dad62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &79069532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79069524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f07bd86ab6e70541b1b6efdd7923b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bridgeParameters: {fileID: 11400000, guid: 4cf00bb368f298844a1f14aa326ef1d6, type: 2}
+  detectionRadius: 10
+  inRangeForEndPoint: 0
+--- !u!114 &79069533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79069524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88fc24a87170f9f45bbdf9a2ef0898fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementSpeed: 4
+  jumpTime: 0.5
+  jumpForce: 4
+  fallMultiplier: 3
+  jumpMultiplier: 2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &376665002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,8 +1273,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1319425203}
-  - component: {fileID: 1319425204}
   - component: {fileID: 1319425205}
+  - component: {fileID: 1319425206}
   m_Layer: 9
   m_Name: StartConnectingPoint
   m_TagString: Untagged
@@ -1297,23 +1297,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1556295466}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1319425204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1319425202}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 497f1cbb37a176645a48c86777bbc06b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  point: 0
-  target: {fileID: 79069526}
-  detectionRadius: 3
-  distance: 0
-  inRangeForStartPoint: 0
 --- !u!135 &1319425205
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1335,6 +1318,23 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.02
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1319425206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319425202}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35363e08cfdcdbc4e93cad57fb836ef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointType: 0
+  target: {fileID: 79069526}
+  detectionRadius: 2.5
+  distance: 0
+  inRangeForStartPoint: 0
 --- !u!1 &1450628462
 GameObject:
   m_ObjectHideFlags: 0
@@ -1419,6 +1419,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1473912120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1473912121}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1473912121
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1473912120}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.6295238, y: -0.908187, z: 0.20568939}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1503629889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2127,8 +2158,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1626825422}
-  - component: {fileID: 1626825423}
   - component: {fileID: 1626825424}
+  - component: {fileID: 1626825425}
   m_Layer: 9
   m_Name: EndConnectingPoint
   m_TagString: Untagged
@@ -2151,23 +2182,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1551034797}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1626825423
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626825421}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 497f1cbb37a176645a48c86777bbc06b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  point: 1
-  target: {fileID: 79069526}
-  detectionRadius: 2
-  distance: 0
-  inRangeForStartPoint: 0
 --- !u!135 &1626825424
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2189,6 +2203,23 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.02
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1626825425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626825421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35363e08cfdcdbc4e93cad57fb836ef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointType: 1
+  target: {fileID: 79069526}
+  detectionRadius: 0
+  distance: 0
+  inRangeForStartPoint: 0
 --- !u!1 &1638162993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,3 +2329,4 @@ SceneRoots:
   - {fileID: 485561440}
   - {fileID: 1544742637}
   - {fileID: 79069526}
+  - {fileID: 1473912121}

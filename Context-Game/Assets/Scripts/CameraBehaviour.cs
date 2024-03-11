@@ -18,15 +18,6 @@ public class CameraBehaviour : MonoBehaviour
         transform.position = _position;
     }
 
-    // private void FollowPlayer() 
-    // {
-    //     if(player != null) 
-    //     {
-    //         Vector3 targetPosition = new(player.transform.position.x, player.transform.position.y, player.transform.position.z - 10f);
-    //         transform.position = Vector2.Lerp(transform.position, targetPosition, cameraSpeed * Time.deltaTime);
-    //     }
-    // }
-
     private void FollowPlayer() 
     {
         if(player != null) 

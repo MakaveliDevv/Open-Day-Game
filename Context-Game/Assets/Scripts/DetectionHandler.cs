@@ -1,11 +1,9 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using Unity.Mathematics;
 using UnityEngine;
 
-public class Detection : MonoBehaviour
+[System.Serializable]
+public class DetectionHandler : MonoBehaviour
 {
     public BridgeSO bridgeParameters;
 
@@ -43,24 +41,21 @@ public class Detection : MonoBehaviour
 
     public void CheckForEndPoint() 
     {
-        // canCreateBridge = false;
         inRangeForEndPoint = false;
-        // foundStartPoint = false;
-        // foundEndPoint = false;
 
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
-        foreach (var hit in hitColliders)
+        foreach (var point in hitColliders)
         {
-            PointDetection hitPoint = hit.GetComponent<PointDetection>();
-            if(hitPoint.point == PointDetection.ConnectingPoints.END) 
+            ConnectingPoints connectPoint = point.GetComponent<ConnectingPoints>();
+            if(connectPoint.pointType == ConnectingPoints.ConnectPoint.END_POINT) 
             {
                 inRangeForEndPoint = true;
-                endPoint = hitPoint.gameObject.transform.position;
+                endPoint = connectPoint.gameObject.transform.position;
             } 
 
-            if(hitPoint.point == PointDetection.ConnectingPoints.START) 
+            if(connectPoint.pointType == ConnectingPoints.ConnectPoint.STARTING_POINT) 
             {
-                startPoint = hitPoint.gameObject.transform.position;
+                startPoint = connectPoint.gameObject.transform.position;
             }
 
             distanceBetweenPoints = Vector2.Distance(startPoint, endPoint);

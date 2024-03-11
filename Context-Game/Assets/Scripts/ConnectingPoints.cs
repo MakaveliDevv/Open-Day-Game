@@ -1,17 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class PointDetection : MonoBehaviour
+public class ConnectingPoints : MonoBehaviour
 {
-    public enum ConnectingPoints 
+    public enum ConnectPoint 
     {
-        START,
-        END
+        STARTING_POINT,
+        END_POINT
     }
 
-    public ConnectingPoints point;
+    public ConnectPoint pointType;
     public Transform target;
     [SerializeField] public float detectionRadius;
     public float distance;
@@ -19,12 +18,9 @@ public class PointDetection : MonoBehaviour
     
 
     void Update()
-    {        
-        // Detection targetScript = target.GetComponent<Detection>();
-        // targetScript.inRangeForEndPoint = false;
-        
+    {                
         // Check if the player is close
-        if(point == ConnectingPoints.START) 
+        if(pointType == ConnectPoint.STARTING_POINT) 
         {
             distance = Vector2.Distance(target.transform.position, transform.position);
             if(distance < detectionRadius) 
@@ -45,4 +41,3 @@ public class PointDetection : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
 }
-
