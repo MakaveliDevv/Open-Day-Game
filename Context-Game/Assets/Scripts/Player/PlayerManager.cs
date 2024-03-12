@@ -14,4 +14,15 @@ public class PlayerManager : MonoBehaviour
         instance = this;
     }
     #endregion
+
+    // public GameObject player; 
+
+    public enum PlayerType 
+    {
+        ARTIST,
+        DESIGNER,
+        DEVELOPER
+    }
+
+    public PlayerType playerType;
 }

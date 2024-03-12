@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 
@@ -10,46 +11,115 @@ public class DetectionHandler : MonoBehaviour
     public bool inRangeForEndPoint = false;
     private Vector2 startPoint, endPoint;
 
+    // public bool inRangeForConnectPoint = false;
+    private PlayerManager player;
+    private BridgeManager bridgeManager;
+    public LayerMask layerMask;
+
+    void Start() 
+    {
+        player = GetComponent<PlayerManager>();
+        bridgeManager = FindObjectOfType<BridgeManager>();
+    }
+
     public void Update()
     {
-        CheckForEndPoint();
-        if (Input.GetKeyDown(KeyCode.P) && inRangeForEndPoint)
+        // CheckForEndPoint();
+        // if (Input.GetKeyDown(KeyCode.P) && inRangeForEndPoint)
+        // {
+        //     CreateBridge();
+        // }
+        CheckForConnectPoint();
+    }
+
+    private void CheckForConnectPoint() 
+    {
+        // inRangeForConnectPoint = false;
+        Collider[] connectPoints = Physics.OverlapSphere(transform.position, detectionRadius);
+        
+        foreach (var _point in connectPoints)
         {
-            CreateBridge();
+            ConnectingPoints point = _point.GetComponent<ConnectingPoints>();
+
+            // Check if the player is in range
+            if(point.inRange) 
+            {
+                // Check connection type and player type
+                if (point.connectPointType == ConnectingPoints.ConnectPointType.BRIDGE_POINT &&
+                    player.playerType == PlayerManager.PlayerType.ARTIST) 
+                {
+                    // Artist can do stuff
+                    // inRangeForEndPoint = false;
+                    Vector2 rayCastPoint = new Vector2(transform.position.x, transform.position.y - .5f);
+                    
+                    RaycastHit2D hit = Physics2D.Raycast(rayCastPoint, Vector2.right, 100f, layerMask);
+                    if (hit.collider != null)
+                    {
+                        // Draw a line from the start position to the hit point
+                        Debug.DrawLine(rayCastPoint, hit.point, Color.green);
+                        Debug.Log("Bridge Hit");
+                    } 
+                    else 
+                    {
+                        // Draw a line indicating the direction of the ray if nothing was hit
+                        Debug.DrawRay(rayCastPoint, Vector2.right * 100f, Color.red);
+                        Debug.Log("Not Hit");
+                    }
+
+                }
+
+
+                // Check what type of connecting point
+                if(point.connectPointType == ConnectingPoints.ConnectPointType.GRAPPLER_POINT &&
+                player.playerType == PlayerManager.PlayerType.DESIGNER) 
+                {
+                    // Designer can do stuff
+                    Debug.Log("This is an Designer player");
+
+                }
+
+                // Check what type of connecting point
+                if(point.connectPointType == ConnectingPoints.ConnectPointType.LADDER_POINT &&
+                player.playerType == PlayerManager.PlayerType.DEVELOPER) 
+                {
+                    // Developer can do stuff
+                    Debug.Log("This is an Developer player");
+
+                }
+            }
         }
     }
 
-    public void CheckForEndPoint()
-    {
-        inRangeForEndPoint = false;
+    // public void CheckForEndPoint()
+    // {
+    //     inRangeForEndPoint = false;
+    //     Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
+    //     BridgeManager bridgeManager = FindObjectOfType<BridgeManager>();
+    //     bridgeManager.pointsThatCanBeConnected.Clear();
 
-        BridgeManager bridgeManager = FindObjectOfType<BridgeManager>();
-        bridgeManager.pointsThatCanBeConnected.Clear();
+    //     foreach (var point in hitColliders)
+    //     {
+    //         ConnectingPoints connectPoint = point.GetComponent<ConnectingPoints>();
+    //         if (connectPoint.connectPoint == ConnectingPoints.ConnectPoint.END_POINT)
+    //         {
+    //             inRangeForEndPoint = true;
+    //             endPoint = connectPoint.gameObject.transform.position;
+    //         }
 
-        foreach (var point in hitColliders)
-        {
-            ConnectingPoints connectPoint = point.GetComponent<ConnectingPoints>();
-            if (connectPoint.pointType == ConnectingPoints.ConnectPoint.END_POINT)
-            {
-                inRangeForEndPoint = true;
-                endPoint = connectPoint.gameObject.transform.position;
-            }
+    //         if (connectPoint.connectPoint == ConnectingPoints.ConnectPoint.STARTING_POINT)
+    //         {
+    //             startPoint = connectPoint.gameObject.transform.position;
+    //         }
 
-            if (connectPoint.pointType == ConnectingPoints.ConnectPoint.STARTING_POINT)
-            {
-                startPoint = connectPoint.gameObject.transform.position;
-            }
-
-            bridgeManager.pointsThatCanBeConnected.Add(point.transform);
-        }      
-    }
+    //         bridgeManager.pointsThatCanBeConnected.Add(point.transform);
+    //     }      
+    // }
 
     private void CreateBridge()
     {
         // Check if a bridge already exists between the points
-        BridgeManager bridgeManager = FindObjectOfType<BridgeManager>();
+        // BridgeManager bridgeManager = FindObjectOfType<BridgeManager>();
         if (bridgeManager == null)
         {
             Debug.LogError("No BridgeManager found in the scene.");
@@ -62,11 +132,11 @@ public class DetectionHandler : MonoBehaviour
         foreach (Transform point in bridgeManager.pointsThatCanBeConnected)
         {
             ConnectingPoints connectPoint = point.GetComponent<ConnectingPoints>();
-            if (connectPoint.pointType == ConnectingPoints.ConnectPoint.STARTING_POINT)
+            if (connectPoint.connectPoint == ConnectingPoints.ConnectPoint.STARTING_POINT)
             {
                 startTransform = point;
             }
-            else if (connectPoint.pointType == ConnectingPoints.ConnectPoint.END_POINT)
+            else if (connectPoint.connectPoint == ConnectingPoints.ConnectPoint.END_POINT)
             {
                 endTransform = point;
             }
@@ -84,7 +154,13 @@ public class DetectionHandler : MonoBehaviour
             Vector3 bridgeScale = new Vector3(Vector2.Distance(startPoint, endPoint), bridgeParameters.height, bridgeParameters.depth);
             GameObject newBridge = Instantiate(bridgeParameters.bridgePrefab, (startPoint + endPoint) / 2f, Quaternion.identity) as GameObject;
 
-            // Rename the new bridge to "Bridge" (or any desired name)
+            // Get animation
+
+            // Play animation
+
+            // If new bridge endpoint is equal to the end connect point, stop animation
+            
+            // Rename the new bridge to "Bridge" 
             newBridge.name = "Bridge";
 
             // Assign a layer to the new bridge

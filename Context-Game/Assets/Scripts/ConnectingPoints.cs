@@ -10,34 +10,60 @@ public class ConnectingPoints : MonoBehaviour
         END_POINT
     }
 
-    public ConnectPoint pointType;
-    public Transform target;
-    [SerializeField] public float detectionRadius;
+    public enum ConnectPointType 
+    {
+        BRIDGE_POINT,
+        LADDER_POINT,
+        GRAPPLER_POINT
+    }
+
+    public ConnectPoint connectPoint;
+    public ConnectPointType connectPointType;
+    // public LayerMask layerMask;
+
+    private Transform player;
+    [SerializeField] private float detectRadius;
     public float distance;
     public bool inRangeForStartPoint = false;
+
+    public bool inRange = false;
     
+    void Start() 
+    {
+        player = PlayerManager.instance.transform;
+    }
 
     void Update()
-    {                
-        // Check if the player is close
-        if(pointType == ConnectPoint.STARTING_POINT) 
+    {          
+        distance = Vector2.Distance(player.position, transform.position);
+        if(distance < detectRadius)
         {
-            distance = Vector2.Distance(target.transform.position, transform.position);
-            if(distance < detectionRadius) 
-            {
-                inRangeForStartPoint = true;
-                // targetScript.CheckForEndPoint();
+            inRange = true;
 
-            } else 
-            {
-                inRangeForStartPoint = false;
-            }
-        }         
+        } 
+
+        else 
+            inRange = false;
+
+        // Check if the player is close
+        // if(connectPoint == ConnectPoint.STARTING_POINT) 
+        // {
+        //     distance = Vector2.Distance(target.transform.position, transform.position);
+        //     if(distance < detectRadius) 
+        //     {
+        //         inRangeForStartPoint = true;
+        //         // targetScript.CheckForEndPoint();
+
+        //     } else 
+        //     {
+        //         inRangeForStartPoint = false;
+        //     }
+        // }         
     }
 
     public void OnDrawGizmosSelected() 
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        Gizmos.DrawWireSphere(transform.position, detectRadius);
     }
 }
