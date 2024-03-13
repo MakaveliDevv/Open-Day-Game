@@ -16,10 +16,13 @@ public class DetectionHandler : MonoBehaviour
     private BridgeManager bridgeManager;
     public LayerMask layerMask;
 
+    public float offsetY;
+    public bool endPointDetected = false;
+
     void Start() 
     {
         player = GetComponent<PlayerManager>();
-        bridgeManager = FindObjectOfType<BridgeManager>();
+        bridgeManager = FindFirstObjectByType<BridgeManager>();
     }
 
     public void Update()
@@ -34,6 +37,7 @@ public class DetectionHandler : MonoBehaviour
 
     private void CheckForConnectPoint() 
     {
+        endPointDetected = false;
         // inRangeForConnectPoint = false;
         Collider[] connectPoints = Physics.OverlapSphere(transform.position, detectionRadius);
         
@@ -49,23 +53,31 @@ public class DetectionHandler : MonoBehaviour
                     player.playerType == PlayerManager.PlayerType.ARTIST) 
                 {
                     // Artist can do stuff
-                    // inRangeForEndPoint = false;
-                    Vector2 rayCastPoint = new Vector2(transform.position.x, transform.position.y - .5f);
+                    Vector2 rayCast = new Vector2(transform.position.x, transform.position.y - offsetY);
+                    // Vector2 rayCast = new(point.transform.position.x, point.transform.position.y);
                     
-                    RaycastHit2D hit = Physics2D.Raycast(rayCastPoint, Vector2.right, 100f, layerMask);
+                    RaycastHit2D hit = Physics2D.Raycast(rayCast, Vector2.right, 100f, layerMask);
                     if (hit.collider != null)
                     {
                         // Draw a line from the start position to the hit point
-                        Debug.DrawLine(rayCastPoint, hit.point, Color.green);
-                        Debug.Log("Bridge Hit");
+                        Debug.DrawLine(rayCast, hit.point, Color.green);
+                        endPointDetected = true;
+                        
+                        
+                        // bridgeManager.pointsThatCanBeConnected.Add(point.transform);
+                        // if (Input.GetKeyDown(KeyCode.P))
+                        // {
+                        //     CreateBridge();
+                        // }
+
                     } 
                     else 
                     {
                         // Draw a line indicating the direction of the ray if nothing was hit
-                        Debug.DrawRay(rayCastPoint, Vector2.right * 100f, Color.red);
+                        Debug.DrawRay(rayCast, Vector2.right * 100f, Color.red);
                         Debug.Log("Not Hit");
+                        endPointDetected = false;
                     }
-
                 }
 
 
@@ -113,7 +125,7 @@ public class DetectionHandler : MonoBehaviour
     //         }
 
     //         bridgeManager.pointsThatCanBeConnected.Add(point.transform);
-    //     }      
+    //     }b
     // }
 
     private void CreateBridge()
@@ -151,7 +163,7 @@ public class DetectionHandler : MonoBehaviour
         // Check if there's already a bridge between these points
         if (!bridgeManager.IsBridgePresent(startTransform, endTransform))
         {
-            Vector3 bridgeScale = new Vector3(Vector2.Distance(startPoint, endPoint), bridgeParameters.height, bridgeParameters.depth);
+            Vector3 bridgeScale = new(Vector2.Distance(startPoint, endPoint), bridgeParameters.height, bridgeParameters.depth);
             GameObject newBridge = Instantiate(bridgeParameters.bridgePrefab, (startPoint + endPoint) / 2f, Quaternion.identity) as GameObject;
 
             // Get animation

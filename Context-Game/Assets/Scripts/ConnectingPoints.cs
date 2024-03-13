@@ -36,14 +36,10 @@ public class ConnectingPoints : MonoBehaviour
     void Update()
     {          
         distance = Vector2.Distance(player.position, transform.position);
-        if(distance < detectRadius)
-        {
+        if(distance < detectRadius) 
             inRange = true;
 
-        } 
-
-        else 
-            inRange = false;
+        else inRange = false;
 
         // Check if the player is close
         // if(connectPoint == ConnectPoint.STARTING_POINT) 
