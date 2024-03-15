@@ -3,7 +3,16 @@ using UnityEngine;
 
 public class BridgeManager : MonoBehaviour
 {
-    public List<Transform> pointsThatCanBeConnected = new();
+    #region Singleton
+    public static BridgeManager instance;
+
+    void Awake() 
+    {
+        instance = this;
+    }
+    #endregion
+    
+    public List<Transform> endPointsDetected = new();
     public List<Bridge> createdBridges = new();
 
     // Function to check if there is already a bridge between two points

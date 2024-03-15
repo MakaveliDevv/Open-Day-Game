@@ -6,29 +6,29 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     // Player
-    public Rigidbody2D rb;
-    private CapsuleCollider2D capsuleCollider;
+    [HideInInspector] public bool isMoving = false;
+
+    [HideInInspector]public Rigidbody2D rb;
+    // private CapsuleCollider2D capsuleCollider;
 
     // Movement
-    public float movementSpeed;
-    private Vector2 inputDirection;
+    [SerializeField] private float movementSpeed;
+    [HideInInspector] public Vector2 inputDirection;
 
     // Jump
-    [Header("Jump System")]
-    public float jumpTime;
-    public int jumpForce;
+    // [Header("Jump System")]
+    // public float jumpTime;
+    // public int jumpForce;
     public float fallMultiplier;
-    public float jumpMultiplier;
-
-    public bool isMoving = false;
-
+    // public float jumpMultiplier;
     private Vector2 vecGravity;
-    [SerializeField] private LayerMask groundLayer;
+
+    // [SerializeField] private LayerMask groundLayer;
 
     void Start() 
     {
         rb = GetComponent<Rigidbody2D>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        // capsuleCollider = GetComponent<CapsuleCollider2D>();
         vecGravity = new(0f, -Physics2D.gravity.y);
     }
 
@@ -46,35 +46,29 @@ public class PlayerMovement : MonoBehaviour
         if(inputDirection != new Vector2(0f, 0f)) 
         {
             isMoving = true;
-            if(isMoving) 
-            {
-                Debug.Log(inputDirection);
-                inputDirection = transform.TransformDirection(inputDirection);
-                inputDirection *= movementSpeed;
-                rb.velocity = new(inputDirection.x, rb.velocity.y);
-            }
+
+            Debug.Log(inputDirection);
+            inputDirection = transform.TransformDirection(inputDirection);
+            inputDirection *= movementSpeed;
+            rb.velocity = new(inputDirection.x, rb.velocity.y);
         
         } else 
         {
             isMoving = false;
-            if(!isMoving) 
-            {
-                rb.velocity = new(0f, 0f);
-            }
         }
+        // Check if player is in the air
+        if(rb.velocity.y < 0.03f) 
+        {
+            rb.velocity -= fallMultiplier * Time.deltaTime * vecGravity;
+
+            // if(jumpCounter > jumpTime) 
+            //     isJumping = false;
+
+            // rb.velocity += jumpMultiplier * Time.deltaTime * vecGravity;    
+        }     
     }
 
         
-        // // Check if player is in the air
-        // if(rb.velocity.y < 0.03f) 
-        // {
-        //     rb.velocity -= fallMultiplier * Time.deltaTime * vecGravity;
-
-        //     if(jumpCounter > jumpTime) 
-        //         isJumping = false;
-
-        //     rb.velocity += jumpMultiplier * Time.deltaTime * vecGravity;    
-        // }     
 
 
     // private void Jump() 

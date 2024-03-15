@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class DetectionHandler : MonoBehaviour
 {
-    public BridgeSO bridgeParameters;
+    public BridgeSO scriptableObjectParam;
     public float detectionRadius = 3f;
     private BridgeManager bridgeManager;
     public LayerMask layerMask;
@@ -16,14 +16,13 @@ public class DetectionHandler : MonoBehaviour
 
     void Start() 
     {
-        // bridgeManager = BridgeManager.instance;
         bridgeManager = FindFirstObjectByType<BridgeManager>();
     }
 
     public void Update()
     {
         CheckForEndPoint();
-        if (Input.GetKeyDown(KeyCode.P) && endPointDetected)
+        if (Input.GetKeyDown(KeyCode.Space) && endPointDetected)
         {
             CreateBridge();
         }
@@ -33,9 +32,7 @@ public class DetectionHandler : MonoBehaviour
     {
         endPointDetected = false;
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
-
-        // BridgeManager bridgeManager = Object.FindFirstObjectByType<BridgeManager>();
-        bridgeManager.pointsThatCanBeConnected.Clear();
+        bridgeManager.endPointsDetected.Clear();
 
         foreach (var point in hitColliders)
         {   
@@ -44,8 +41,9 @@ public class DetectionHandler : MonoBehaviour
             if(connectPoint != null && connectPoint.connectPointType == ConnectingPoints.ConnectPointType.BRIDGE_POINT 
             && connectPoint.inRange && connectPoint.connectPoint == ConnectingPoints.ConnectPoint.STARTING_POINT)
             {
-                bridgeManager.pointsThatCanBeConnected.Add(connectPoint.transform);
+                bridgeManager.endPointsDetected.Add(connectPoint.transform);
                 
+                // RAYCAST
                 Vector2 rayCastPos = new(connectPoint.transform.position.x, connectPoint.transform.position.y - rayCastOffsetY);
                 RaycastHit2D hit = Physics2D.Raycast(rayCastPos, Vector2.right, 100f, layerMask);
 
@@ -53,7 +51,7 @@ public class DetectionHandler : MonoBehaviour
                 {
                     Debug.DrawLine(rayCastPos, hit.point, Color.green);
                     endPointDetected = true;
-                    bridgeManager.pointsThatCanBeConnected.Add(hit.transform);
+                    bridgeManager.endPointsDetected.Add(hit.transform);
                 
                 } else 
                 {
@@ -75,7 +73,7 @@ public class DetectionHandler : MonoBehaviour
         Transform startTransform = null;
         Transform endTransform = null;
 
-        foreach (Transform point in bridgeManager.pointsThatCanBeConnected)
+        foreach (Transform point in bridgeManager.endPointsDetected)
         {
             ConnectingPoints connectPoint = point.GetComponent<ConnectingPoints>();
             if (connectPoint.connectPoint == ConnectingPoints.ConnectPoint.STARTING_POINT)
@@ -97,14 +95,8 @@ public class DetectionHandler : MonoBehaviour
         // Check if there's already a bridge between these points
         if (!bridgeManager.IsBridgePresent(startTransform, endTransform))
         {
-            Vector3 bridgeScale = new(Vector2.Distance(startTransform.position, endTransform.position), bridgeParameters.height, bridgeParameters.depth);
-            GameObject newBridge = Instantiate(bridgeParameters.bridgePrefab, (startTransform.position + endTransform.position) / 2f, Quaternion.identity) as GameObject;
-
-            // Get animation
-
-            // Play animation
-
-            // If new bridge endpoint is equal to the end connect point, stop animation
+            Vector3 bridgeScale = new(Vector2.Distance(startTransform.position, endTransform.position), scriptableObjectParam.height, scriptableObjectParam.depth);
+            GameObject newBridge = Instantiate(scriptableObjectParam.bridgePrefab, (startTransform.position + endTransform.position) / 2f, Quaternion.identity) as GameObject;
             
             // Rename the new bridge to "Bridge" 
             newBridge.name = "Bridge";
@@ -116,8 +108,8 @@ public class DetectionHandler : MonoBehaviour
             newBridge.transform.localScale = bridgeScale;
 
             // Remove points from the list as they are now connected
-            bridgeManager.pointsThatCanBeConnected.Remove(startTransform);
-            bridgeManager.pointsThatCanBeConnected.Remove(endTransform);
+            bridgeManager.endPointsDetected.Remove(startTransform);
+            bridgeManager.endPointsDetected.Remove(endTransform);
 
             // Create bridge record
             bridgeManager.createdBridges.Add(new Bridge(startTransform, endTransform));
