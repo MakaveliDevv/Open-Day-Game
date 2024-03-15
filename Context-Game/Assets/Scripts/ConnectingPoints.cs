@@ -31,6 +31,21 @@ public class ConnectingPoints : MonoBehaviour
     void Start() 
     {
         player = PlayerManager.instance.transform;
+
+        // Create a new GameObject for visualization
+        // GameObject sphereVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        
+        // // Remove the collider component from the visualization sphere
+        // Destroy(sphereVisualizer.GetComponent<Collider>());
+
+        // // Set the position of the visualization sphere to match the transform position
+        // sphereVisualizer.transform.position = transform.position;
+
+        // // Scale the visualization sphere based on the detection radius
+        // sphereVisualizer.transform.localScale = new Vector3(detectionRadius * 2f, detectionRadius * 2f, detectionRadius * 2f);
+        
+        // // Set the visualization sphere as a child of the current GameObject
+        // sphereVisualizer.transform.parent = transform;
     }
 
     void Update()

@@ -11,12 +11,20 @@ public class ScaleOverTime : MonoBehaviour
     private GameObject endPointCube;
     private Vector3 initialScale;
     private Quaternion initialRotation;
+    public Vector3 currentEndPointPos;
+    private Coroutine coroutine; // To keep track of scaling coroutine
+    private PlayerMovement player;
 
     public float speed = 3f;
     public float resetDuration = 3f;
+    public bool bridgeIsCreated = false;
+    [SerializeField] private bool isExpanding = false; 
+    [SerializeField] private bool isExpandingBack = false;
 
-    private Coroutine coroutine; // To keep track of scaling coroutine
-
+    void Awake() 
+    {
+        player = GetComponentInParent<PlayerMovement>();
+    }
 
     void Start() 
     {
@@ -24,9 +32,10 @@ public class ScaleOverTime : MonoBehaviour
 
         // Reference to the child object of the cube
         endPointCube = cube.transform.GetChild(0).gameObject;
+        currentEndPointPos = endPointCube.transform.position;
 
         // Position
-        transform.position = startPoint.position;
+        // transform.position = startPoint.position;
 
         // Scale
         initialScale = transform.localScale;
@@ -35,9 +44,15 @@ public class ScaleOverTime : MonoBehaviour
         initialRotation= transform.rotation;
     }
 
+    private void CalculateCubeEndPosition() 
+    {
+        Vector3 newCurrentPosition = endPointCube.transform.position;
+        currentEndPointPos = newCurrentPosition;
+    }
+    
     void Update() 
     {
-        Vector2 startPointPos = startPoint.transform.position;
+        Vector2 startPointPos = transform.position;
         Vector2 endPointPos = endPoint.transform.position;
 
         // Get distance between the two points
@@ -49,20 +64,27 @@ public class ScaleOverTime : MonoBehaviour
         // Calculate the angle towards the end point
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        if (Input.GetKeyDown(KeyCode.G))
+        // Check if we are moving
+        if (Input.GetKeyDown(KeyCode.G) && !player.isMoving)
         {
             // If scaling coroutine is running, stop it
             if (coroutine != null)
                 StopCoroutine(coroutine);
             
             // Apply rotation
-            Quaternion targetRotation = Quaternion.Euler(0f, 0f, angle);
+            Quaternion rotateTo = Quaternion.Euler(0f, 0f, angle);
 
             // Calculate the target scale based on the distance between the points
-            Vector3 targetScale = new(distanceBetweenPoints, transform.localScale.y, transform.localScale.z);
+            Vector3 calculatedScale_X = new(distanceBetweenPoints, transform.localScale.y, transform.localScale.z);
+
+            // Get the local scale from the endPoint object
+            Vector3 scaleEndPoint = new(1f, 1f, 1f);
+            
+            // Assign a fixed scale to it so it won't expand on it's own
+            endPoint.localScale = scaleEndPoint;
 
             // Scale the object based on the distance between the points
-            coroutine = StartCoroutine(ScaleOverTimee(transform.localScale, targetScale, targetRotation));
+            coroutine = StartCoroutine(ScaleOverTimee(transform.localScale, calculatedScale_X, transform.rotation, rotateTo));
         
         } else if (Input.GetKeyUp(KeyCode.G)) 
         {
@@ -70,73 +92,115 @@ public class ScaleOverTime : MonoBehaviour
             if (coroutine != null)
                 StopCoroutine(coroutine);
 
-            coroutine = StartCoroutine(ResetOverTimee(initialScale, initialRotation));
+            coroutine = StartCoroutine(ResetOverTimee(transform.localScale, initialScale, transform.rotation, initialRotation));
+        }
+        else if(player.isMoving) 
+        {
+            return;
         }
     }
-
-    IEnumerator ResetOverTimee(Vector3 _initialScale, Quaternion _initialRotation)
+    
+    IEnumerator ScaleOverTimee(Vector3 _Vstart, Vector3 _Vtarget, Quaternion _Qstart, Quaternion _Qtarget)
     {
-        float elapsedTime = 0f;
-        Vector3 currentScale = transform.localScale;
-        
+        isExpanding = false;
+        float elapsedTime = 0f;        
         while (elapsedTime < resetDuration)
         {
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / resetDuration);
 
             // Interpolate towards the target scale
-            transform.localScale = Vector3.Lerp(currentScale, _initialScale, t);
+            transform.localScale = Vector3.Lerp(_Vstart, _Vtarget, t);
+
+            // Interpolate towards the target rotation
+            transform.rotation = Quaternion.Slerp(_Qstart, _Qtarget, t);
+            
+            isExpanding = true;
+
+            if(isExpanding) 
+            {
+                isExpandingBack = false;
+                // Specify that the player cant move
+                Debug.Log("Player cant move");
+            }
+
+            CalculateCubeEndPosition();
 
             yield return null;
         }
 
         // Ensure the scale is exactly the target scale when done
-        transform.localScale = _initialScale;
+        transform.localScale = _Vtarget;
+        if(transform.localScale == _Vtarget) 
+        {   
+            bridgeIsCreated = true;
+            isExpanding = false;
+            // Specify that the player can move again
+            Debug.Log("Player can move again");
+        }
+    	
+        coroutine = null; // Reset scaling coroutine reference
+    }
+
+    IEnumerator ResetOverTimee(Vector3 _Vcurrent, Vector3 _Vinitial, Quaternion _Qcurrent, Quaternion _Qinitial)
+    {
+        isExpandingBack = false;
+        float elapsedTime = 0f;        
+        while (elapsedTime < resetDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / resetDuration);
+
+            // Interpolate towards the target scale
+            transform.localScale = Vector3.Lerp(_Vcurrent, _Vinitial, t);
+
+            bridgeIsCreated = false;
+
+            isExpandingBack = true;
+
+            if(isExpandingBack) 
+            {
+                isExpanding = false;
+                // Specify that the player cant move
+                Debug.Log("Player cant move");
+            }
+
+            CalculateCubeEndPosition();
+
+            yield return null;
+        }
+
+        // Ensure the scale is exactly the target scale when done
+        transform.localScale = _Vinitial;
+        if(transform.localScale == _Vinitial) 
+        {
+            bridgeIsCreated = false;
+            isExpandingBack = false;
+        }
 
         // Now start rotating back to the initial rotation
         elapsedTime = 0f; // Reset elapsedTime for rotation
-        Quaternion currentRotation = transform.rotation;
-
         while (elapsedTime < resetDuration)
         {
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / resetDuration);
 
             // Interpolate towards the initial rotation
-            transform.rotation = Quaternion.Slerp(currentRotation, _initialRotation, t);
+            transform.rotation = Quaternion.Slerp(_Qcurrent, _Qinitial, t);
+
+            CalculateCubeEndPosition();
 
             yield return null;
         }
 
         // Ensure the rotation is exactly the initial rotation when done
-        transform.rotation = _initialRotation;
-
-        coroutine = null; // Reset scaling coroutine reference
-    }
-
-    IEnumerator ScaleOverTimee(Vector3 _startScale, Vector3 _targetScale, Quaternion _targetRotation)
-    {
-        float elapsedTime = 0f;
-        Quaternion currentRotation = transform.rotation;
-        
-        while (elapsedTime < resetDuration)
+        transform.rotation = _Qinitial;
+        if(transform.rotation == _Qinitial) 
         {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / resetDuration);
-
-            // Interpolate towards the target scale
-            transform.localScale = Vector3.Lerp(_startScale, _targetScale, t);
-
-            // Interpolate towards the target rotation
-            transform.rotation = Quaternion.Slerp(currentRotation, _targetRotation, t);
-
-            yield return null;
+            // Specify that the player cant move
+            Debug.Log("Player can move again");
         }
 
-        // Ensure the scale is exactly the target scale when done
-        transform.localScale = _targetScale;
-
         coroutine = null; // Reset scaling coroutine reference
     }
-
 }

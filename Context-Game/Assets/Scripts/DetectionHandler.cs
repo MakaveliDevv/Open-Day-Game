@@ -9,8 +9,6 @@ public class DetectionHandler : MonoBehaviour
 {
     public BridgeSO bridgeParameters;
     public float detectionRadius = 3f;
-    private Vector2 startPoint, endPoint;
-    private PlayerManager player;
     private BridgeManager bridgeManager;
     public LayerMask layerMask;
     public float rayCastOffsetY;
@@ -18,7 +16,7 @@ public class DetectionHandler : MonoBehaviour
 
     void Start() 
     {
-        player = GetComponent<PlayerManager>();
+        // bridgeManager = BridgeManager.instance;
         bridgeManager = FindFirstObjectByType<BridgeManager>();
     }
 
@@ -36,7 +34,7 @@ public class DetectionHandler : MonoBehaviour
         endPointDetected = false;
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
 
-        BridgeManager bridgeManager = Object.FindFirstObjectByType<BridgeManager>();
+        // BridgeManager bridgeManager = Object.FindFirstObjectByType<BridgeManager>();
         bridgeManager.pointsThatCanBeConnected.Clear();
 
         foreach (var point in hitColliders)
