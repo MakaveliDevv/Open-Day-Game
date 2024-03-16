@@ -1,30 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ScalingController : MonoBehaviour
 {
-    // Points
-    private Transform startPoint; // Own transform
-    public ConnectPoint endPoint;   // Point that's detected
+    private PlayerController player;
+    [SerializeField] private BridgeManager _bridge;
+    private Coroutine coroutine;
+    // private Transform startPoint; // Own transform
+    public BridgeSO bridge;
+    public GameObject instantiatePoint; 
+    private GameObject newBridge;
 
     // Scale
     private Vector3 initialScale;
     private Quaternion initialRotation;
-    [SerializeField] private bool isExpanding; 
-    [SerializeField] private bool isExpandingBack;
-    [SerializeField] private bool stopScaling;
+    public bool isExpanding; 
+    public bool isExpandingBack;
+    public bool stopScaling;
 
-    private PlayerController player;
-    private Coroutine coroutine;
-
-    void Awake() 
-    {
-        player = GetComponentInParent<PlayerController>();
-    }
+    public float timer;
+    public float timeUntilScaleBack = 4f;
+    public float scaleFactor = 10f;
 
     void Start() 
     {
+        player = GetComponentInParent<PlayerController>();
+
         // Scale
         initialScale = transform.localScale;
 
@@ -34,128 +38,173 @@ public class ScalingController : MonoBehaviour
 
     void Update() 
     {
-        startPoint = transform;
+        if(_bridge == null) 
+        {
+            _bridge = BridgeManager.instance;
+        }
+        // startPoint = transform;
+
+        if(Input.GetKeyDown(KeyCode.G)) 
+        {
+            // Instantiate game object
+            if(newBridge == null) 
+            {
+                newBridge = Instantiate(bridge.bridgePrefab, instantiatePoint.transform.position, Quaternion.identity) as GameObject;
+                newBridge.name = "bridge";
+
+            
+            } 
+            if(newBridge != null && player != null) 
+            {
+                newBridge.transform.SetParent(player.transform);
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && !player.isMoving)
         {
             // If scaling coroutine is running, stop it
             if (coroutine != null)
                 StopCoroutine(coroutine);
+
+            if(!stopScaling) 
+            {
+                isExpandingBack = false; // Need to set this otherwise it bugs when pressing the button down to fast
+                coroutine = StartCoroutine(Scaling(Vector2.right));
             
-            stopScaling = false;
-            coroutine = StartCoroutine(Scaling(Vector2.right, true));
-        } 
-        
-        if (Input.GetKeyUp(KeyCode.Space)) 
-        {
+            } 
+            
+        } else if (Input.GetKeyUp(KeyCode.Space)) 
+        {            
             // If scaling coroutine is running, stop it and start scaling back
             if (coroutine != null) 
                 StopCoroutine(coroutine);
 
-                // If endpoint is detected cant scale back
-                if(!stopScaling) 
-                {
-                    coroutine = StartCoroutine(ScaleBack(transform.localScale, initialScale, transform.rotation, initialRotation));
-                }
-        
+            // If endpoint is detected cant scale back
+            if(!stopScaling) 
+            {
+                isExpanding = false;
+                coroutine = StartCoroutine(ScaleBack(_bridge.transform.localScale, initialScale));
+            }
         }
-        else if (player.isMoving) 
+
+        if (stopScaling) 
         {
-            return;
+            timer += Time.deltaTime; // Accumulate elapsed time
+
+            if (timer >= timeUntilScaleBack) // Check if the timer has reached or exceeded the desired time
+            {
+                // Scale back
+                stopScaling = false;
+                coroutine = StartCoroutine(ScaleBack(_bridge.transform.localScale, initialScale));
+
+                if(Input.GetKeyDown(KeyCode.Space)) 
+                {
+                    if(coroutine != null)
+                        StopCoroutine(coroutine);
+
+                    StartCoroutine(Scaling(Vector2.right)); 
+                }
+
+                // Reset the timer for the next iteration
+                timer = 0;
+            
+            } else if(Input.GetKeyDown(KeyCode.R)) 
+            {
+                stopScaling = false;
+                coroutine = StartCoroutine(ScaleBack(_bridge.transform.localScale, initialScale));
+
+                if(Input.GetKeyDown(KeyCode.Space)) 
+                {
+                    if(coroutine != null)
+                        StopCoroutine(coroutine);
+
+                    StartCoroutine(Scaling(Vector2.right)); 
+                }
+
+                // Reset the timer for the next iteration
+                timer = 0;
+                    
+            }
         }
     }
 
-    IEnumerator Scaling(Vector3 targetDirection, bool expanding)
+    IEnumerator Scaling(Vector3 _targetDirection)
     {
         while (true) // Continuously scale
         {
-            Vector3 targetScale = transform.localScale + player.scaleFactor * Time.deltaTime * targetDirection;
-            transform.localScale = targetScale;
+            Vector3 targetScale = _bridge.transform.localScale + scaleFactor * Time.deltaTime * _targetDirection;
+            _bridge.transform.localScale = targetScale;
+            isExpanding = true;
 
             // Check for connect points while scaling
             if (DetectionPoint.instance.PointDetected())
             {
-                StopScaling(transform.localScale);
-                isExpanding = false;
-                yield break;
-            }
-
-            // Handle player movement
-            if (expanding)
-            {
-                isExpanding = true;
-                isExpandingBack = false;
-                player.rb.velocity = Vector2.zero;
-                player.isMoving = false;
-            
-            } else if(!expanding)
-            {
-                isExpanding = false;
-                isExpandingBack = true;
-            
-            } else 
-            {
-                StopScaling(transform.localScale);
-            }
-
+                // Stop scaling
+                FreezeScaling(_bridge.transform.localScale);
+            } 
             yield return null;
         }
     }
 
-    private void StopScaling(Vector3 currentScale) 
+    private void FreezeScaling(Vector3 _currentScale) 
     {
-        transform.localScale = currentScale;
-
         if(coroutine != null)
             StopCoroutine(coroutine);
 
-        player.rb.velocity = Vector2.zero;
-        player.isMoving = false;
+        _bridge.transform.localScale = _currentScale;
         stopScaling = true;
+
+        // Reset expansion state flags
+        isExpanding = false;
+        isExpandingBack = false;
     }
 
-    IEnumerator ScaleBack(Vector3 startScale, Vector3 targetScale, Quaternion startRotation, Quaternion targetRotation)
+    IEnumerator ScaleBack(Vector3 _startScale, Vector3 _targetScale)
     {
-        isExpandingBack = false;
+        // isExpandingBack = false;
         float startTime = Time.time;
-        float journeyLength = Vector3.Distance(startScale, targetScale);
+        float journeyLength = Vector3.Distance(_startScale, _targetScale);
 
-        while (transform.localScale != targetScale)
+        while (_bridge.transform.localScale != _targetScale)
         {
             float journeyTime = Time.time - startTime;
-            float fracJourney = journeyTime * player.scaleFactor / journeyLength;
-            transform.localScale = Vector3.Lerp(startScale, targetScale, Mathf.Clamp01(fracJourney));
+            float fracJourney = journeyTime * scaleFactor / journeyLength;
+            _bridge.transform.localScale = Vector3.Lerp(_startScale, _targetScale, Mathf.Clamp01(fracJourney));
 
             isExpandingBack = true;
             isExpanding = false;
-            player.rb.velocity = Vector2.zero;
-            player.isMoving = false;
 
             yield return null;
         }
 
         // Ensure the scale is exactly the target scale when done
-        transform.localScale = targetScale;
+        _bridge.transform.localScale = _targetScale;
         isExpandingBack = false;
 
+        
+        // Reset stopScaling flag after scaling back
+        stopScaling = false;
+
+      
+    }
+
         // Now start rotating back to the initial rotation
-        startTime = Time.time;
-        journeyLength = Quaternion.Angle(startRotation, targetRotation);
+        // startTime = Time.time;
+        // journeyLength = Quaternion.Angle(startRotation, targetRotation);
 
-        while (transform.rotation != targetRotation)
-        {
-            float journeyTime = Time.time - startTime;
-            float fracJourney = journeyTime * player.scaleFactor / journeyLength;
-            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, Mathf.Clamp01(fracJourney));
+        // while (transform.rotation != targetRotation)
+        // {
+        //     float journeyTime = Time.time - startTime;
+        //     float fracJourney = journeyTime * player.scaleFactor / journeyLength;
+        //     transform.rotation = Quaternion.Slerp(startRotation, targetRotation, Mathf.Clamp01(fracJourney));
 
-            yield return null;
-        }
+        //     yield return null;
+        // }
 
         // Ensure the rotation is exactly the initial rotation when done
-        transform.rotation = targetRotation;
+        // transform.rotation = targetRotation;
     
         // Allow player to move again
         // player.rb.velocity = new Vector2(player.inputDirection.x, player.rb.velocity.y);
         // player.isMoving = true;
-    }
 }

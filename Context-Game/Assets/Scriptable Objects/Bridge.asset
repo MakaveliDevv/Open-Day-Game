@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: babe6660344066e4f977d419c1ec2766, type: 3}
   m_Name: Bridge
   m_EditorClassIdentifier: 
-  bridgePrefab: {fileID: 2724308091020222731, guid: 4c26af4b6b97bd443aae9cdc50d8a736, type: 3}
+  bridgePrefab: {fileID: 8149716980901104461, guid: 32dc01482813c834a8494fbf38c8c3cf, type: 3}
   height: 0.5
   depth: 1

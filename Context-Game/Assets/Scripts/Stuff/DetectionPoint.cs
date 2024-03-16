@@ -19,7 +19,7 @@ public class DetectionPoint : MonoBehaviour
     #endregion
 
     public GameObject point;
-    [HideInInspector] public GameManager gameManager;
+    private GameManager gameManager;
     [SerializeField] private float detectRadius;
 
     void Start() 

@@ -15,12 +15,15 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector2 inputDirection;
 
     // Scaling
-    public float scaleFactor = 10f;
+    private ScalingController scalingContr;
+
 
     void Start() 
     {
         rb = GetComponent<Rigidbody2D>();
-        vecGravity = new(0f, -Physics2D.gravity.y);
+        scalingContr = GetComponentInChildren<ScalingController>();
+
+        vecGravity = new(0f, - Physics2D.gravity.y);
     }
 
     void Update() 
@@ -34,11 +37,13 @@ public class PlayerController : MonoBehaviour
     {
         isMoving = false;
 
-        if(inputDirection != new Vector2(0f, 0f)) 
+        if(inputDirection != new Vector2(0f, 0f) 
+        && !scalingContr.isExpanding 
+        && !scalingContr.isExpandingBack
+        && !scalingContr.stopScaling) 
         {
             isMoving = true;
 
-            Debug.Log(inputDirection);
             inputDirection = transform.TransformDirection(inputDirection);
             inputDirection *= movementSpeed;
             rb.velocity = new(inputDirection.x, rb.velocity.y);
@@ -47,10 +52,11 @@ public class PlayerController : MonoBehaviour
         {
             isMoving = false;
         }
+
         // Check if player is in the air
         if(rb.velocity.y < 0.03f) 
         {
             rb.velocity -= fallMultiplier * Time.deltaTime * vecGravity; 
-        }     
+        }
     }
 }
