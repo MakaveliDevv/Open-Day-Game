@@ -12,7 +12,7 @@ public class BridgeManager : MonoBehaviour
     }
     #endregion
     
-    public List<Transform> endPointsDetected = new();
+    public List<ConnectPoint> endPointsDetected = new();
     public List<Bridge> createdBridges = new();
 
     // Function to check if there is already a bridge between two points

@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
-   #region Singleton
+    #region Singleton
 
-    public static PlayerManager instance;
+    [HideInInspector] public static PlayerManager instance;
 
     void Awake() 
     {
-        instance = this;
+        if(instance != null) 
+            Destroy(this);
+        
+        else
+            instance = this;
+
+        DontDestroyOnLoad(instance);    
     }
     #endregion
 

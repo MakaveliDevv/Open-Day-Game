@@ -5,26 +5,28 @@ using UnityEngine;
 
 public class ScaleOverTime : MonoBehaviour
 {
-private Transform startPoint; // Point A
+    private Transform startPoint; // Point A
     private Transform endPoint;   // Point B
 
     private Vector3 initialScale;
     private Quaternion initialRotation;
     public Vector3 currentEndPointPos;
     private Coroutine coroutine; // To keep track of scaling coroutine
-    private PlayerMovement player;
-    private Point point;
+    private PlayerController player;
+    private DetectionPoint point;
 
     public float speed = 3f;
-    public float resetDuration = 3f;
+    public float scaleSpeed = 3f;
     public bool bridgeIsCreated = false;
     [SerializeField] private bool isExpanding = false; 
     [SerializeField] private bool isExpandingBack = false;
+    public float rotationSpeed;
+    public float scalingSpeed;
 
     void Start() 
     {
-        player = GetComponentInParent<PlayerMovement>();
-        point = transform.GetChild(0).gameObject.GetComponent<Point>();
+        player = GetComponentInParent<PlayerController>();
+        point = transform.GetChild(0).gameObject.GetComponent<DetectionPoint>();
 
         // Scale
         initialScale = transform.localScale;
@@ -39,13 +41,13 @@ private Transform startPoint; // Point A
         Vector2 startPointPos = new Vector2(startPoint.position.x, startPoint.position.y);
 
         // Get the end point position
-        if (point.EndPointDetected()) 
+        if (point.PointDetected()) 
         {
             // Fetch the end point from the list: endPointsDetected
             foreach (var detectedPoint in point.bridgeManager.endPointsDetected)
             {
                 // Get the position from that end point 
-                endPoint = detectedPoint.transform;
+                endPoint = detectedPoint;
                 Debug.Log("End point detected!");
             }
         }
@@ -165,50 +167,65 @@ private Transform startPoint; // Point A
     //         return;
     //     }
     // }
+
+
+            
+        // Vector2 endPointPos = endPoint.transform.position;
+
+        // // Get distance between the two points
+        // float distanceBetweenPoints = Vector2.Distance(startPointPos, endPointPos);
+
+        // // Calculate the direction towards the end point
+        // Vector2 direction = (endPointPos - startPointPos).normalized;
+
+        // // Calculate the angle towards the end point
+        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+
+
+
     
     IEnumerator ScaleOverTimee(Vector3 _Vstart, Vector3 _Vtarget, Quaternion _Qstart, Quaternion _Qtarget)
     {
         isExpanding = false;
-        float elapsedTime = 0f;        
-        while (elapsedTime < resetDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / resetDuration);
+        float elapsedTime = 0;    
 
+        while (elapsedTime <= 0)
+        {
             // Interpolate towards the target scale
-            transform.localScale = Vector3.Lerp(_Vstart, _Vtarget, t);
+            transform.localScale = Vector3.Lerp(_Vstart, _Vtarget, scalingSpeed);
 
             // Interpolate towards the target rotation
-            transform.rotation = Quaternion.Slerp(_Qstart, _Qtarget, t);
-            
+            transform.rotation = Quaternion.Slerp(_Qstart, _Qtarget, rotationSpeed);
             isExpanding = true;
 
             if(isExpanding) 
             {
                 isExpandingBack = false;
+                elapsedTime += Time.deltaTime;
+
                 // Specify that the player cant move
                 Debug.Log("Player cant move");
                 player.rb.velocity = new(0f, 0f);
                 player.isMoving = false;
             }
 
-            // CalculateCubeEndPosition();
+            // Ensure the scale is exactly the target scale when done
+            transform.localScale = _Vtarget;
+            if(transform.localScale == _Vtarget) 
+            {   
+                bridgeIsCreated = true;
+                isExpanding = false;
+                elapsedTime = 0;
+                
+                // Specify that the player can move again
+                Debug.Log("Player can move again");
+                player.rb.velocity = new(player.inputDirection.x, player.rb.velocity.y);
+                player.isMoving = true;
+            }
 
             yield return null;
         }
-
-        // Ensure the scale is exactly the target scale when done
-        transform.localScale = _Vtarget;
-        if(transform.localScale == _Vtarget) 
-        {   
-            bridgeIsCreated = true;
-            isExpanding = false;
-            // Specify that the player can move again
-            Debug.Log("Player can move again");
-            player.rb.velocity = new(player.inputDirection.x, player.rb.velocity.y);
-            player.isMoving = true;
-        }
-    	
         coroutine = null; // Reset scaling coroutine reference
     }
 
@@ -216,10 +233,10 @@ private Transform startPoint; // Point A
     {
         isExpandingBack = false;
         float elapsedTime = 0f;        
-        while (elapsedTime < resetDuration)
+        while (elapsedTime < scaleSpeed)
         {
             elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / resetDuration);
+            float t = Mathf.Clamp01(elapsedTime / scaleSpeed);
 
             // Interpolate towards the target scale
             transform.localScale = Vector3.Lerp(_Vcurrent, _Vinitial, t);
@@ -252,10 +269,10 @@ private Transform startPoint; // Point A
 
         // Now start rotating back to the initial rotation
         elapsedTime = 0f; // Reset elapsedTime for rotation
-        while (elapsedTime < resetDuration)
+        while (elapsedTime < scaleSpeed)
         {
             elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / resetDuration);
+            float t = Mathf.Clamp01(elapsedTime / scaleSpeed);
 
             // Interpolate towards the initial rotation
             transform.rotation = Quaternion.Slerp(_Qcurrent, _Qinitial, t);

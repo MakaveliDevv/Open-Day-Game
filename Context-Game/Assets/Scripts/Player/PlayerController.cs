@@ -1,21 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
-{
+public class PlayerController : MonoBehaviour
+{    
     // Player
-    [HideInInspector] public bool isMoving = false;
+    public bool isMoving = false;
     [HideInInspector] public Rigidbody2D rb;
+    public float fallMultiplier;
+    private Vector2 vecGravity;
 
     // Movement
     [SerializeField] private float movementSpeed;
     [HideInInspector] public Vector2 inputDirection;
 
-    public float fallMultiplier;
-    private Vector2 vecGravity;
-
+    // Scaling
+    public float scaleFactor = 10f;
 
     void Start() 
     {
