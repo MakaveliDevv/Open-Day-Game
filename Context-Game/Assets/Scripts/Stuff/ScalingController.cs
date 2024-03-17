@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -7,12 +8,16 @@ using UnityEngine.UIElements;
 public class ScalingController : MonoBehaviour
 {
     private PlayerController player;
-    [SerializeField] private BridgeManager _bridge;
+    [SerializeField] private BridgeManager bridgeManag;
     private Coroutine coroutine;
-    // private Transform startPoint; // Own transform
-    public BridgeSO bridge;
+
+    // References
+    public BridgeSO bridge_ScriptObject;
+    private GameObject bridge;
     public GameObject instantiatePoint; 
-    private GameObject newBridge;
+    public GameObject detectPoint;
+    private GameObject newPoint;
+    private GameObject endPoint;
 
     // Scale
     private Vector3 initialScale;
@@ -38,93 +43,120 @@ public class ScalingController : MonoBehaviour
 
     void Update() 
     {
-        if(_bridge == null) 
-        {
-            _bridge = BridgeManager.instance;
-        }
-        // startPoint = transform;
+        CreateBridge();
+        InputToCreateScaleBridge();
+    }
 
-        if(Input.GetKeyDown(KeyCode.G)) 
+    private void InputToCreateScaleBridge()
+    {
+        if(bridge != null) 
+        {
+            if (Input.GetKeyDown(KeyCode.Space) && !player.isMoving)
+            {
+                // If scaling coroutine is running, stop it
+                if (coroutine != null)
+                    StopCoroutine(coroutine);
+
+                if(!stopScaling) 
+                {
+                    isExpandingBack = false; // Need to set this otherwise it bugs when pressing the button down to fast
+                    coroutine = StartCoroutine(Scaling(Vector2.right));
+                
+                } 
+                
+            } else if (Input.GetKeyUp(KeyCode.Space)) 
+            {            
+                // If scaling coroutine is running, stop it and start scaling back
+                if (coroutine != null) 
+                    StopCoroutine(coroutine);
+
+                // If endpoint is detected cant scale back
+                if(!stopScaling) 
+                {
+                    isExpanding = false;
+                    coroutine = StartCoroutine(ScaleBack(bridgeManag.transform.localScale, initialScale));
+                }
+            }
+
+            if (stopScaling) 
+            {
+                timer += Time.deltaTime; // Accumulate elapsed time
+
+                if (timer >= timeUntilScaleBack) // Check if the timer has reached or exceeded the desired time
+                {
+                    // Scale back
+                    stopScaling = false;
+                    coroutine = StartCoroutine(ScaleBack(bridgeManag.transform.localScale, initialScale));
+
+                    if(Input.GetKeyDown(KeyCode.Space)) 
+                    {
+                        if(coroutine != null)
+                            StopCoroutine(coroutine);
+
+                        StartCoroutine(Scaling(Vector2.right)); 
+                    }
+
+                    // Reset the timer for the next iteration
+                    timer = 0;
+                
+                } else if(Input.GetKeyDown(KeyCode.R)) 
+                {
+                    stopScaling = false;
+                    coroutine = StartCoroutine(ScaleBack(bridgeManag.transform.localScale, initialScale));
+
+                    if(Input.GetKeyDown(KeyCode.Space)) 
+                    {
+                        if(coroutine != null)
+                            StopCoroutine(coroutine);
+
+                        StartCoroutine(Scaling(Vector2.right)); 
+                    }
+
+                    // Reset the timer for the next iteration
+                    timer = 0;
+                        
+                }
+            }
+
+        }
+    }
+
+    private void CreateBridge()
+    {
+        if(bridgeManag == null) 
+        {
+            bridgeManag = BridgeManager.instance;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.G))
         {
             // Instantiate game object
-            if(newBridge == null) 
+            if (bridge == null)
             {
-                newBridge = Instantiate(bridge.bridgePrefab, instantiatePoint.transform.position, Quaternion.identity) as GameObject;
-                newBridge.name = "bridge";
+                bridge = Instantiate(bridge_ScriptObject.bridgePrefab, instantiatePoint.transform.position, Quaternion.identity);
+                bridge.name = "BridgePrefab";
 
-            
-            } 
-            if(newBridge != null && player != null) 
-            {
-                newBridge.transform.SetParent(player.transform);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space) && !player.isMoving)
-        {
-            // If scaling coroutine is running, stop it
-            if (coroutine != null)
-                StopCoroutine(coroutine);
-
-            if(!stopScaling) 
-            {
-                isExpandingBack = false; // Need to set this otherwise it bugs when pressing the button down to fast
-                coroutine = StartCoroutine(Scaling(Vector2.right));
-            
-            } 
-            
-        } else if (Input.GetKeyUp(KeyCode.Space)) 
-        {            
-            // If scaling coroutine is running, stop it and start scaling back
-            if (coroutine != null) 
-                StopCoroutine(coroutine);
-
-            // If endpoint is detected cant scale back
-            if(!stopScaling) 
-            {
-                isExpanding = false;
-                coroutine = StartCoroutine(ScaleBack(_bridge.transform.localScale, initialScale));
-            }
-        }
-
-        if (stopScaling) 
-        {
-            timer += Time.deltaTime; // Accumulate elapsed time
-
-            if (timer >= timeUntilScaleBack) // Check if the timer has reached or exceeded the desired time
-            {
-                // Scale back
-                stopScaling = false;
-                coroutine = StartCoroutine(ScaleBack(_bridge.transform.localScale, initialScale));
-
-                if(Input.GetKeyDown(KeyCode.Space)) 
+                endPoint = GameObject.FindGameObjectWithTag("EndPoint");
+                if (endPoint != null)
                 {
-                    if(coroutine != null)
-                        StopCoroutine(coroutine);
-
-                    StartCoroutine(Scaling(Vector2.right)); 
+                    newPoint = Instantiate(detectPoint, endPoint.transform.position, Quaternion.identity) as GameObject;
                 }
-
-                // Reset the timer for the next iteration
-                timer = 0;
-            
-            } else if(Input.GetKeyDown(KeyCode.R)) 
-            {
-                stopScaling = false;
-                coroutine = StartCoroutine(ScaleBack(_bridge.transform.localScale, initialScale));
-
-                if(Input.GetKeyDown(KeyCode.Space)) 
+                else
                 {
-                    if(coroutine != null)
-                        StopCoroutine(coroutine);
-
-                    StartCoroutine(Scaling(Vector2.right)); 
+                    Debug.LogError("No GameObject tagged with 'EndPoint' found.");
                 }
-
-                // Reset the timer for the next iteration
-                timer = 0;
-                    
             }
+
+            if (bridge != null && player != null)
+            {
+                bridge.transform.SetParent(player.transform);
+            }
+
+        } 
+
+        if (newPoint != null && endPoint != null)
+        {
+            newPoint.transform.position = endPoint.transform.position;
         }
     }
 
@@ -132,15 +164,15 @@ public class ScalingController : MonoBehaviour
     {
         while (true) // Continuously scale
         {
-            Vector3 targetScale = _bridge.transform.localScale + scaleFactor * Time.deltaTime * _targetDirection;
-            _bridge.transform.localScale = targetScale;
+            Vector3 targetScale = bridgeManag.transform.localScale + scaleFactor * Time.deltaTime * _targetDirection;
+            bridgeManag.transform.localScale = targetScale;
             isExpanding = true;
 
             // Check for connect points while scaling
             if (DetectionPoint.instance.PointDetected())
             {
                 // Stop scaling
-                FreezeScaling(_bridge.transform.localScale);
+                FreezeScaling(bridgeManag.transform.localScale);
             } 
             yield return null;
         }
@@ -151,7 +183,7 @@ public class ScalingController : MonoBehaviour
         if(coroutine != null)
             StopCoroutine(coroutine);
 
-        _bridge.transform.localScale = _currentScale;
+        bridgeManag.transform.localScale = _currentScale;
         stopScaling = true;
 
         // Reset expansion state flags
@@ -165,11 +197,11 @@ public class ScalingController : MonoBehaviour
         float startTime = Time.time;
         float journeyLength = Vector3.Distance(_startScale, _targetScale);
 
-        while (_bridge.transform.localScale != _targetScale)
+        while (bridgeManag.transform.localScale != _targetScale)
         {
             float journeyTime = Time.time - startTime;
             float fracJourney = journeyTime * scaleFactor / journeyLength;
-            _bridge.transform.localScale = Vector3.Lerp(_startScale, _targetScale, Mathf.Clamp01(fracJourney));
+            bridgeManag.transform.localScale = Vector3.Lerp(_startScale, _targetScale, Mathf.Clamp01(fracJourney));
 
             isExpandingBack = true;
             isExpanding = false;
@@ -178,7 +210,7 @@ public class ScalingController : MonoBehaviour
         }
 
         // Ensure the scale is exactly the target scale when done
-        _bridge.transform.localScale = _targetScale;
+        bridgeManag.transform.localScale = _targetScale;
         isExpandingBack = false;
 
         

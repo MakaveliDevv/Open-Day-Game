@@ -18,14 +18,14 @@ public class DetectionPoint : MonoBehaviour
     }
     #endregion
 
-    public GameObject point;
+    // public GameObject point;
     private GameManager gameManager;
     [SerializeField] private float detectRadius;
 
     void Start() 
     {
         gameManager = GameManager.instance;
-        transform.position = point.transform.position;
+        // transform.position = point.transform.position;
 
         // // Create a new GameObject for visualization
         // GameObject sphereVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -46,7 +46,7 @@ public class DetectionPoint : MonoBehaviour
 
     void Update() 
     {
-        transform.position = point.transform.position;
+        // transform.position = point.transform.position;
         PointDetected();
     }
 
