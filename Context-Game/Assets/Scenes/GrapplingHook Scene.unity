@@ -1997,8 +1997,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027ff8d2a6657944894d8cf0261f7061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bridge: {fileID: 0}
-  bridge_ScriptObject: {fileID: 11400000, guid: 262fc6ff16c42014095aa258f5160340, type: 2}
+  bridgeManag: {fileID: 0}
+  bridgeSO: {fileID: 11400000, guid: 10af11dfa907d0f4c8e9c93a3ff5ef0d, type: 2}
   instantiatePoint: {fileID: 288902454747765711}
   detectPoint: {fileID: 2194041748212303040, guid: 2995f5c9eba479244a24a698210017a2, type: 3}
   isExpanding: 0

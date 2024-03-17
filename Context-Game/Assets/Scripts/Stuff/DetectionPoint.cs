@@ -21,10 +21,12 @@ public class DetectionPoint : MonoBehaviour
     // public GameObject point;
     private GameManager gameManager;
     [SerializeField] private float detectRadius;
+    Vector3 currentPosition;
 
     void Start() 
     {
         gameManager = GameManager.instance;
+        currentPosition = transform.position;
         // transform.position = point.transform.position;
 
         // // Create a new GameObject for visualization
@@ -48,6 +50,15 @@ public class DetectionPoint : MonoBehaviour
     {
         // transform.position = point.transform.position;
         PointDetected();
+        GetPosition();
+    }
+
+    public Vector3 GetPosition() 
+    {
+        Vector3 updatedPosition = transform.position;
+        currentPosition = updatedPosition;
+        
+        return currentPosition;
     }
 
     public bool PointDetected() 

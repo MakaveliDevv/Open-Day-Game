@@ -12,12 +12,13 @@ public class ScalingController : MonoBehaviour
     private Coroutine coroutine;
 
     // References
-    public BridgeSO bridge_ScriptObject;
+    public BridgeSO bridgeSO;
     private GameObject bridge;
     public GameObject instantiatePoint; 
     public GameObject detectPoint;
     private GameObject newPoint;
     private GameObject endPoint;
+    private GameObject pivotPoint;
 
     // Scale
     private Vector3 initialScale;
@@ -43,6 +44,11 @@ public class ScalingController : MonoBehaviour
 
     void Update() 
     {
+        if(pivotPoint == null) 
+        {
+            pivotPoint = GameObject.Find("PivotPoint");
+        }
+
         CreateBridge();
         InputToCreateScaleBridge();
     }
@@ -77,6 +83,7 @@ public class ScalingController : MonoBehaviour
                     coroutine = StartCoroutine(ScaleBack(bridgeManag.transform.localScale, initialScale));
                 }
             }
+   
 
             if (stopScaling) 
             {
@@ -115,6 +122,11 @@ public class ScalingController : MonoBehaviour
                     // Reset the timer for the next iteration
                     timer = 0;
                         
+                } else if(Input.GetKeyDown(KeyCode.L)) 
+                {
+                    // Move player to the endpoint
+                    Debug.Log("Swag");
+                    StartCoroutine(ExpandBackTowardsEndPoint(transform.localScale, detectPoint.transform.position));
                 }
             }
 
@@ -133,7 +145,7 @@ public class ScalingController : MonoBehaviour
             // Instantiate game object
             if (bridge == null)
             {
-                bridge = Instantiate(bridge_ScriptObject.bridgePrefab, instantiatePoint.transform.position, Quaternion.identity);
+                bridge = Instantiate(bridgeSO.objectPrefab, instantiatePoint.transform.position, Quaternion.identity);
                 bridge.name = "BridgePrefab";
 
                 endPoint = GameObject.FindGameObjectWithTag("EndPoint");
@@ -177,19 +189,57 @@ public class ScalingController : MonoBehaviour
             yield return null;
         }
     }
-
-    private void FreezeScaling(Vector3 _currentScale) 
+    public IEnumerator ExpandBackTowardsEndPoint(Vector3 _startPosition, Vector3 _targetDirection)
     {
-        if(coroutine != null)
-            StopCoroutine(coroutine);
+        // float journeyLength = Vector3.Distance(_startPosition, _targetDirection);
+        float elapsedTime = 0f;
+        float duration = 3f; // Adjust the duration as needed
 
-        bridgeManag.transform.localScale = _currentScale;
-        stopScaling = true;
+        while (elapsedTime < duration)
+        {
+            // Interpolate between start and target scale
+            float t = elapsedTime / duration;
+            pivotPoint.transform.localScale = Vector3.Lerp(_startPosition, _targetDirection, t);
+            
+            // Increment elapsed time
+            elapsedTime += Time.deltaTime;
 
-        // Reset expansion state flags
-        isExpanding = false;
-        isExpandingBack = false;
+            yield return null;
+        }
+
+        // Ensure the scale is exactly the target scale when done
+        pivotPoint.transform.localScale = _targetDirection;
+
+        Destroy(bridgeManag.gameObject);
     }
+
+    public bool DestroyGameObject(GameObject _object) 
+    {
+        return true;
+    }
+
+    // public IEnumerator ExpandBackTowardsEndPoint(Vector3 _startPosition, Vector3 _targetDirection) 
+    // {
+    //     // Get distance from the startPoint to the endpoint
+    //     // float startTime = Time.time;
+    //     float journeyLength = Vector3.Distance(_startPosition, _targetDirection);
+
+    //     GameObject pivotPoint = GameObject.Find("PivotPoint");
+    //     Vector3 targetScale = new(0, 1, 1);
+        
+    //     while(pivotPoint.transform.localScale !=  targetScale) 
+    //     {
+    //         // float journeyTime = Time.time - startTime;
+    //         float fracJourney = 3f * scaleFactor / journeyLength;
+    //         pivotPoint.transform.localScale = Vector3.Lerp(_startPosition, _targetDirection, Mathf.Clamp01(fracJourney));
+    //     }
+
+    //     pivotPoint.transform.localScale = _targetDirection;
+
+    //     Destroy(gameObject);
+
+    //     yield return null;
+    // }
 
     IEnumerator ScaleBack(Vector3 _startScale, Vector3 _targetScale)
     {
@@ -213,11 +263,21 @@ public class ScalingController : MonoBehaviour
         bridgeManag.transform.localScale = _targetScale;
         isExpandingBack = false;
 
-        
         // Reset stopScaling flag after scaling back
         stopScaling = false;
+    }
 
-      
+    private void FreezeScaling(Vector3 _currentScale) 
+    {
+        if(coroutine != null)
+            StopCoroutine(coroutine);
+
+        bridgeManag.transform.localScale = _currentScale;
+        stopScaling = true;
+
+        // Reset expansion state flags
+        isExpanding = false;
+        isExpandingBack = false;
     }
 
         // Now start rotating back to the initial rotation

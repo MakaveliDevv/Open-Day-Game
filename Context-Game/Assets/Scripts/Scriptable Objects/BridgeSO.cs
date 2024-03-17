@@ -5,6 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BridgeParameters_", menuName = "Bridge/BridgeSO")]
 public class BridgeSO : ScriptableObject
 {
-    public GameObject bridgePrefab;
+    public GameObject objectPrefab;
     public float height = .5f, depth = 1f;
 }
