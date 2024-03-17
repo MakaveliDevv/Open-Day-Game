@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour
         if(inputDirection != new Vector2(0f, 0f) 
         && !scalingContr.isExpanding 
         && !scalingContr.isExpandingBack
-        && !scalingContr.stopScaling) 
+        && !scalingContr.stopScalingCuzEndPointReached) 
         {
             isMoving = true;
 
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         
         } else 
         {
-            isMoving = false;
+            isMoving = false;            
         }
 
         // Check if player is in the air
