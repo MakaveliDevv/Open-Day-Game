@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f7930460196c0c47a637199c3a0e994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRadius: 0.5
+  detectRadius: 0.2
   isMoving: 0

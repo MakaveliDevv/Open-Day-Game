@@ -6,15 +6,6 @@ using UnityEngine;
 public class BridgeSO : ScriptableObject
 {
     public GameObject objectPrefab;
-    public float height = .5f, depth = 1f;
-
-    void Start() 
-    {
-        // Test();
-    }
-
-    // private void Test() 
-    // {
-    //     objectPrefab.transform.localScale = new Vector3(objectPrefab.transform.localScale.x, height, depth);
-    // }
+    public Vector3 initialScale = new(.2f, .2f, 1f);
+    public float height = .2f, depth = 1f;
 }
