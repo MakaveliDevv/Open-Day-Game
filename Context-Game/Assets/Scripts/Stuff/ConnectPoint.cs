@@ -13,9 +13,4 @@ public class ConnectPoint : MonoBehaviour
     }
 
     public ConnectPointType connectPointType;
-
-    // public static implicit operator Transform(ConnectPoint v)
-    // {
-    //     throw new NotImplementedException();
-    // }
 }

@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
 
     void Start() 
     {
-        rb = playerRenderer.GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         scalingContr = GetComponentInChildren<ScalingController>();
 
         vecGravity = new(0f, - Physics2D.gravity.y);

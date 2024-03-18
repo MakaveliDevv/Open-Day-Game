@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DetectPoint
   - EndPoint
+  - StartPoint
   layers:
   - Default
   - TransparentFX

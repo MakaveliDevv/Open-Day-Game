@@ -51,29 +51,24 @@ public class DetectionPoint : MonoBehaviour
     {
         // transform.position = point.transform.position;
         PointDetected();
-        GetPosition();
+        Moving();
     }
 
-    public Vector3 GetPosition() 
+    public bool Moving() 
     {
-        Vector3 currentPosition = previousPosition;
-
-        float distance = Vector3.Distance(currentPosition, previousPosition);
-
-        // If the distance is greater than a small threshold, consider the object as moving
-        if (distance > 0.001f)
+        Vector3 currenPosition = transform.position;
+        if(currenPosition != previousPosition) 
         {
+            previousPosition = currenPosition;
             isMoving = true;
-        }
-        else
+            return true;
+        
+        } else 
         {
             isMoving = false;
         }
 
-        
-        previousPosition = currentPosition;
-        
-        return previousPosition;
+        return false;
     }
 
     public bool PointDetected() 
@@ -83,11 +78,11 @@ public class DetectionPoint : MonoBehaviour
 
         if (hitPoint != null)
         {
-            ConnectPoint connectPoint = hitPoint.GetComponent<ConnectPoint>();
+            Point point = hitPoint.GetComponent<Point>();
 
-            if (connectPoint != null && connectPoint.connectPointType == ConnectPoint.ConnectPointType.BRIDGE_POINT)
+            if (point != null && point.pointName == Point.PointName.BRIDGE_POINT)
             {
-                gameManager.connectPointList.Add(connectPoint);
+                gameManager.connectPointList.Add(point);
                 return true;
             }
         }
