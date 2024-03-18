@@ -16,11 +16,12 @@ public class PlayerController : MonoBehaviour
 
     // Scaling
     private ScalingController scalingContr;
+    public GameObject playerRenderer;
 
 
     void Start() 
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = playerRenderer.GetComponent<Rigidbody2D>();
         scalingContr = GetComponentInChildren<ScalingController>();
 
         vecGravity = new(0f, - Physics2D.gravity.y);

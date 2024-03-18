@@ -21,12 +21,13 @@ public class DetectionPoint : MonoBehaviour
     // public GameObject point;
     private GameManager gameManager;
     [SerializeField] private float detectRadius;
-    Vector3 currentPosition;
+    Vector3 previousPosition;
+    public bool isMoving = false;
 
     void Start() 
     {
         gameManager = GameManager.instance;
-        currentPosition = transform.position;
+        previousPosition = transform.position;
         // transform.position = point.transform.position;
 
         // // Create a new GameObject for visualization
@@ -55,10 +56,24 @@ public class DetectionPoint : MonoBehaviour
 
     public Vector3 GetPosition() 
     {
-        Vector3 updatedPosition = transform.position;
-        currentPosition = updatedPosition;
+        Vector3 currentPosition = previousPosition;
+
+        float distance = Vector3.Distance(currentPosition, previousPosition);
+
+        // If the distance is greater than a small threshold, consider the object as moving
+        if (distance > 0.001f)
+        {
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
         
-        return currentPosition;
+        previousPosition = currentPosition;
+        
+        return previousPosition;
     }
 
     public bool PointDetected() 

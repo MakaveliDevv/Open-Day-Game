@@ -30,6 +30,7 @@ public class ScalingController : MonoBehaviour
     public float timer;
     public float timeUntilScaleBack = 4f;
     public float scaleFactor = 10f;
+    public DetectionPoint point;
 
     void Start() 
     {
@@ -160,7 +161,7 @@ public class ScalingController : MonoBehaviour
 
             if (bridge != null && player != null)
             {
-                bridge.transform.SetParent(player.transform);
+                bridge.transform.SetParent(player.playerRenderer.transform);
             }
 
         } 
@@ -188,17 +189,22 @@ public class ScalingController : MonoBehaviour
             yield return null;
         }
     }
+
     public IEnumerator ExpandBackTowardsEndPoint(Vector3 _startPosition)
     {
         float elapsedTime = 0f;
         float duration = 3f;
-        Vector3 targetPos = new(0, 1, 1);
+        Vector3 targetScale = new(0, 1, 1);
+        Vector3 targetPosition = newPoint.transform.position;
 
         while (elapsedTime < duration)
         {
             // Interpolate between start and target scale
             float t = elapsedTime / duration;
-            pivotPoint.transform.localScale = Vector3.Lerp(_startPosition, targetPos, t);
+            pivotPoint.transform.localScale = Vector3.Lerp(_startPosition, targetScale, t);
+
+            // Interpolate the player between the start and target scale
+            // player.transform.position = Vector3.Lerp(_startPosition, targetPosition, t);
             
             // Increment elapsed time
             elapsedTime += Time.deltaTime;
@@ -206,8 +212,21 @@ public class ScalingController : MonoBehaviour
             yield return null;
         }
 
+        // Get this working tomorrow
+        // NEED TO SET THE PLAYER RENDERER OFF ONCE THE DETECT POINT STARTS MOVING
+        point = newPoint.GetComponent<DetectionPoint>();
+        if(point == null) 
+            yield return null;
+
+        if(point.isMoving) 
+        {
+            player.playerRenderer.SetActive(false);
+        }
+
         // Ensure the scale is exactly the target scale when done
-        pivotPoint.transform.localScale = targetPos;
+        pivotPoint.transform.localScale = targetScale;
+        
+        // player.transform.position = targetPosition;
 
         DestroyGameObject(bridgeManag.gameObject);
         DestroyGameObject(newPoint);
@@ -231,6 +250,11 @@ public class ScalingController : MonoBehaviour
         // isExpandingBack = false;
         float startTime = Time.time;
         float journeyLength = Vector3.Distance(_startScale, _targetScale);
+
+        // Check if script is active
+        if(bridgeManag == null) 
+            yield return null;
+            
 
         while (bridgeManag.transform.localScale != _targetScale)
         {
