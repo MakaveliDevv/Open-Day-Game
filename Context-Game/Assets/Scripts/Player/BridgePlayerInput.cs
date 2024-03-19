@@ -1,21 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
 
-public class BridgePlayerInput : ScalingController
-{
-    void Update() 
-    {
+// public class BridgePlayerInput : ScalingController
+// {
+//     void Update() 
+//     {
 
-        if(pivotPoint == null) 
-        {
-            pivotPoint = GameObject.Find("PivotPoint");
-        }
+//         if(pivotPoint == null) 
+//         {
+//             pivotPoint = GameObject.Find("PivotPoint");
+//         }
 
         
         // CreateBridge();
         // ScaleInput();
-    }
+    // }
     
     // private void CreateBridge()
     // {    
@@ -139,4 +139,4 @@ public class BridgePlayerInput : ScalingController
     //     }
         
     // }
-}
+// }

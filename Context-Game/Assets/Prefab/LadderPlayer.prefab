@@ -33,7 +33,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.73, y: -7.71, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1216698001192701782}
   - {fileID: 5261937256663243065}
@@ -85,7 +85,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -93,7 +93,7 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
@@ -146,17 +146,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61ec6c36ebb04c7428b4d7723b5957b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bridgeSO: {fileID: 11400000, guid: 9a9bac354e2861c4c87c517bf0e69977, type: 2}
-  detectPoint: {fileID: 2194041748212303040, guid: 2995f5c9eba479244a24a698210017a2, type: 3}
-  startingPoint: {fileID: 2375884326055280989, guid: 966363512855ec44eb9f9c8a79ca613a, type: 3}
+  _scriptObj: {fileID: 11400000, guid: 25eb6f25abe1f4643be1e6ed173b4b1e, type: 2}
+  pivotPoint: {fileID: 0}
   instantiatePoint: {fileID: 7986145411388570457}
+  startPivPoint: {fileID: 0}
+  endPivPoint: {fileID: 0}
   isExpanding: 0
   isExpandingBack: 0
   stopScalingCuzEndPointReached: 0
   timer: 0
   timeUntilScaleBack: 4
   scaleFactor: 10
-  teleportOffset: {x: 0, y: 1.5, z: 0}
+  teleportOffset: {x: 0, y: 2.5, z: 0}
 --- !u!212 &4177681051607363446
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -306,7 +307,7 @@ GameObject:
   m_Layer: 0
   m_Name: InstantiatePoint
   m_TagString: Untagged
-  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -337,7 +338,7 @@ GameObject:
   m_Layer: 0
   m_Name: ' PivotPoint'
   m_TagString: Untagged
-  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

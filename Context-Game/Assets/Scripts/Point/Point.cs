@@ -89,7 +89,7 @@ public class Point : MonoBehaviour
         {
             previousPosition = currentPosition;
             isMoving = true;
-            Debug.Log(gameObject.name + " : " + previousPosition);
+            // Debug.Log(gameObject.name + " : " + previousPosition);
             return true; // Object is moving
         } 
         else 

@@ -15,13 +15,13 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Vector2 inputDirection;
 
     // Scaling
-    private ScalingController scalingContr;
+    private Controller controller;
     public GameObject playerRenderer;
     
     void Start() 
     {
         rb = GetComponent<Rigidbody2D>();
-        scalingContr = GetComponentInChildren<ScalingController>();
+        controller = GetComponentInChildren<Controller>();
 
         vecGravity = new(0f, - Physics2D.gravity.y);
     }
@@ -37,9 +37,9 @@ public class PlayerController : MonoBehaviour
         isMoving = false;
 
         if(inputDirection != new Vector2(0f, 0f) 
-        && !scalingContr.isExpanding 
-        && !scalingContr.isExpandingBack
-        && !scalingContr.stopScalingCuzEndPointReached) 
+        && !controller.isExpanding 
+        && !controller.isExpandingBack
+        && !controller.stopScalingCuzEndPointReached) 
         {
             isMoving = true;
 

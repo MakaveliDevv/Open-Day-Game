@@ -7,7 +7,7 @@ TagManager:
   - DetectPoint
   - StartPivPoint
   - EndPivPoint
-  - StartPoint
+  - PivotPoint
   layers:
   - Default
   - TransparentFX

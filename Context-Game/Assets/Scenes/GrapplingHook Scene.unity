@@ -3398,22 +3398,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1647171223}
     m_Modifications:
-    - target: {fileID: 1705100546667840740, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
-      propertyPath: bridgeSO
-      value: 
-      objectReference: {fileID: 11400000, guid: 9a9bac354e2861c4c87c517bf0e69977, type: 2}
-    - target: {fileID: 1705100546667840740, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
-      propertyPath: _scriptObj
-      value: 
-      objectReference: {fileID: 11400000, guid: 25eb6f25abe1f4643be1e6ed173b4b1e, type: 2}
-    - target: {fileID: 1705100546667840740, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
-      propertyPath: startPivPoint
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1705100546667840740, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
-      propertyPath: teleportOffset.y
-      value: 2.5
-      objectReference: {fileID: 0}
     - target: {fileID: 2923990031667858229, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
       propertyPath: m_Name
       value: LadderPlayer
@@ -3459,24 +3443,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6870004079138639917, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6870004079138639917, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
-      propertyPath: m_Interpolate
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6870004079138639917, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
-      propertyPath: m_GravityScale
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6870004079138639917, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
       propertyPath: m_SleepingMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6870004079138639917, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
