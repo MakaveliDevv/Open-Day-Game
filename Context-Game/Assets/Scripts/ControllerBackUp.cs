@@ -1,35 +1,22 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class ScalingController : MonoBehaviour
+public class ControllerBackUp : MonoBehaviour
 {
-    // public BridgeSO bridgeSO;
-    public ScriptObject _scriptObj;
+    public BridgeSO bridgeSO;
     protected PlayerController player;
     protected Coroutine coroutine;
-
-    // Object Points
-    protected GameObject instantiatedObject;
-    protected GameObject startPointObj, detectObj;
 
     // References
     // protected GameObject newBridge; 
 
     // Points
-    // public GameObject detectPoint;
-    // protected GameObject newDetectPoint;
+    public GameObject detectPoint;
+    protected GameObject newDetectPoint;
 
-    // Transform
-    [SerializeField] protected Transform instantiatePoint, startPivPoint, endPivPoint;
-
-
-    // public GameObject startingPoint;
-    // protected GameObject newStartingPoint;
+    public GameObject startingPoint;
+    protected GameObject newStartingPoint;
     
     // public Transform instantiatePoint; 
     protected Transform pivotStartPoint;
@@ -37,8 +24,8 @@ public class ScalingController : MonoBehaviour
     protected GameObject pivotPoint;
 
     // Scale
-    // protected Vector3 initialScale;
-    // protected Quaternion initialRotation;
+    protected Vector3 initialScale;
+    protected Quaternion initialRotation;
     public bool isExpanding; 
     public bool isExpandingBack;
     public bool stopScalingCuzEndPointReached;
@@ -52,8 +39,8 @@ public class ScalingController : MonoBehaviour
     {
         player = GetComponentInParent<PlayerController>();
 
-        // initialScale = bridgeSO.initialScale;
-        // initialRotation = bridgeSO.finalRotation;
+        initialScale = bridgeSO.initialScale;
+        initialRotation = bridgeSO.finalRotation;
     }
 
 

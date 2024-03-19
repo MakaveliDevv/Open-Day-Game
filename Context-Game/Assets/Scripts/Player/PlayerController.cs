@@ -11,14 +11,13 @@ public class PlayerController : MonoBehaviour
     private Vector2 vecGravity;
 
     // Movement
-    [SerializeField] private float movementSpeed;
+    [SerializeField] private float moveSpeed;
     [HideInInspector] public Vector2 inputDirection;
 
     // Scaling
     private ScalingController scalingContr;
     public GameObject playerRenderer;
-
-
+    
     void Start() 
     {
         rb = GetComponent<Rigidbody2D>();
@@ -30,7 +29,6 @@ public class PlayerController : MonoBehaviour
     void Update() 
     { 
         inputDirection = new(Input.GetAxisRaw("Horizontal"), 0f);
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         MovePlayer();
     }
 
@@ -46,7 +44,7 @@ public class PlayerController : MonoBehaviour
             isMoving = true;
 
             inputDirection = transform.TransformDirection(inputDirection);
-            inputDirection *= movementSpeed;
+            inputDirection *= moveSpeed;
             rb.velocity = new(inputDirection.x, rb.velocity.y);
         
         } else 
