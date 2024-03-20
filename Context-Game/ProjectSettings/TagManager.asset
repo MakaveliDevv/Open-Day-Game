@@ -5,9 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - DetectPoint
-  - StartPivPoint
-  - EndPivPoint
-  - PivotPoint
+  - StartPoint
+  - EndPoint
+  - ExtendPoint1
+  - ExtendPoint2
+  - ToExtandBack
   layers:
   - Default
   - TransparentFX

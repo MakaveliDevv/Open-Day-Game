@@ -2617,6 +2617,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47702eee1d689a408f8ca3c343dad62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  artist: 0
+  designer: 0
+  developer: 0
   playerType: 1
 --- !u!1001 &1626975214
 PrefabInstance:
@@ -3400,15 +3403,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2923990031667858229, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
       propertyPath: m_Name
-      value: LadderPlayer
+      value: Developer
       objectReference: {fileID: 0}
     - target: {fileID: 4979677472663477106, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.73
+      value: -10.11
       objectReference: {fileID: 0}
     - target: {fileID: 4979677472663477106, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.71
+      value: -8.12
       objectReference: {fileID: 0}
     - target: {fileID: 4979677472663477106, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3442,12 +3445,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6870004079138639917, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
-      propertyPath: m_SleepingMode
+    - target: {fileID: 7631181883257988536, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
+      propertyPath: playerType
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 7849733741801070485, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8af8044b7089444cbcfcfbb5cc43a3f, type: 3}
