@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3431975365243663093
 Transform:
   m_ObjectHideFlags: 0
@@ -207,7 +207,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9057e45b8203ced45966f6fbd03ca17f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptObj: {fileID: 11400000, guid: 75b0c9dab535e7b4faff8807bd3a99b8, type: 2}
+  _scriptObj: {fileID: 11400000, guid: e4ca268b93388384cab5438f4f0bcc99, type: 2}
+  _detectPoint: {fileID: 0}
+  _instantiateObj: {fileID: 0}
   instantiatePoint: {fileID: 3784766553916754182}
   startPoint: {fileID: 0}
   endPoint: {fileID: 0}
@@ -217,8 +219,7 @@ MonoBehaviour:
   teleportedToEndPoint: 0
   timeUntilScaleBack: 4
   scaleFactor: 10
-  teleportOffset: {x: 0, y: 1, z: 0}
-  detectPointOffSet: 0
+  teleportOffset: {x: 0, y: 30, z: 0}
 --- !u!1 &8673844143901504299
 GameObject:
   m_ObjectHideFlags: 0

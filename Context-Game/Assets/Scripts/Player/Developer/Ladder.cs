@@ -8,8 +8,11 @@ public class Ladder : MonoBehaviour
 {
     private Rigidbody2D rbPlayer;
     public float speed = 6f;
+    
+    #pragma warning disable IDE0052 // Remove unread private members
     private bool playerDetected = false;
     private bool playerMovingOnLadder = false;
+    #pragma warning restore IDE0052 // Remove unread private members
 
     private void OnTriggerStay2D(Collider2D collider) 
     {

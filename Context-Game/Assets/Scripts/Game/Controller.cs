@@ -4,13 +4,14 @@ using UnityEngine;
 public class Controller : MonoBehaviour
 {
     [SerializeField] protected ScriptObject _scriptObj;
-    protected PlayerController player;
+    protected PlayerController _player;
     protected Coroutine coroutine;
-    protected PlayerManager playerManag;
+    protected PlayerManager _playerManag;
+    [SerializeField] protected DetectionPoint _detectPoint;
 
 
     // Object Points
-    protected GameObject _instantiateObj;
+    public GameObject _instantiateObj;
     protected GameObject startPointObj, detectObj;
 
     // Transform
@@ -32,7 +33,7 @@ public class Controller : MonoBehaviour
 
     void Awake() 
     {
-        if(!TryGetComponent<PlayerManager>(out playerManag)) 
+        if(!TryGetComponent<PlayerManager>(out _playerManag)) 
         {
             Debug.LogError("PlayerManager component not found!");
         }
@@ -40,7 +41,7 @@ public class Controller : MonoBehaviour
 
     void Start() 
     {
-        player = GetComponentInParent<PlayerController>();
+        _player = GetComponentInParent<PlayerController>();
         StartCoroutine(CreateObject());
     }
 
@@ -53,8 +54,10 @@ public class Controller : MonoBehaviour
         if (_instantiateObj == null)
         {   
             // Game Object
-            _instantiateObj = Instantiate(_scriptObj.@object, instantiatePoint.transform.position, _scriptObj.finalRotation);
-            _instantiateObj.transform.SetParent(player.transform);
+            _instantiateObj = Instantiate(_scriptObj.@object, instantiatePoint.transform.position, _scriptObj.@object.transform.rotation);
+            
+            // Set the @object as a child of the player
+            _instantiateObj.transform.SetParent(_player.transform);
             _instantiateObj.name = _scriptObj.name;
 
             ObjectPoint[] objPoints = _instantiateObj.GetComponentsInChildren<ObjectPoint>();
@@ -77,11 +80,14 @@ public class Controller : MonoBehaviour
             // Start Pivot Point
             startPointObj = Instantiate(_scriptObj.startObj, extendPoint1.position, Quaternion.identity);
             startPointObj.name = "NewStartPointPrefab";
+            startPointObj.transform.SetParent(_player.transform);
 
             // Detect point Game Object (End Pivot Point) 
             detectObj = Instantiate(_scriptObj.detectObj, extendPoint2.position, Quaternion.identity) as GameObject;
             detectObj.name = "Detect Point";
-
+            detectObj.transform.SetParent(_player.transform);
+            
+            // _detectPoint = detectObj.GetComponent<DetectionPoint>();
             objectCreated = true;
         }
 
@@ -95,10 +101,14 @@ public class Controller : MonoBehaviour
             Vector3 targetScale = initialScale + scaleFactor * Time.deltaTime * _targetDirection;
             _scaleObj.transform.localScale = targetScale;
             isExpanding = true;
+            Debug.Log("We are scaling!");
+            
+            _detectPoint = detectObj.GetComponent<DetectionPoint>();
 
-            // Check for connect points while scaling
-            if (DetectionPoint.instance.PointDetected())
+            // // Check for connect points while scaling
+            if (_detectPoint.PointDetected())
             {
+                Debug.Log("Point detected!, calling from controller script");
                 // Stop scaling
                 FreezeScaling(_scaleObj, _scaleObj.transform.localScale);
             } 
@@ -150,7 +160,7 @@ public class Controller : MonoBehaviour
             if(_point.Moving(startPointObj.transform)) 
             {
                 // Debug.Log("We are moving");
-                player.playerRenderer.SetActive(false);
+                _player.playerRenderer.SetActive(false);
             }
             
             // Increment elapsed time
@@ -165,10 +175,10 @@ public class Controller : MonoBehaviour
         if(_scaleObj.transform.localScale == targetScale) 
         {
             Debug.Log("Reached the endpoint");
-            player.transform.position = detectObj.transform.position + teleportOffset;
+            _player.transform.position = detectObj.transform.position + teleportOffset;
 
             teleportedToEndPoint = true;
-            player.playerRenderer.SetActive(true);
+            _player.playerRenderer.SetActive(true);
         }
 
         if(teleportedToEndPoint) 
@@ -185,7 +195,7 @@ public class Controller : MonoBehaviour
             objectCreated = false;
             _point.isMoving = false;
             
-            player.rb.velocity = player.inputDirection;
+            _player.rb.velocity = _player.inputDirection;
         }
         
         stopScalingCuzEndPointReached = false;
@@ -201,7 +211,7 @@ public class Controller : MonoBehaviour
         return true;
     }
 
-    private void FreezeScaling(GameObject _scaleObj, Vector3 _currentScale) 
+    public void FreezeScaling(GameObject _scaleObj, Vector3 _currentScale) 
     {
         if(coroutine != null)
             StopCoroutine(coroutine);

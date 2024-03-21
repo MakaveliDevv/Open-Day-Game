@@ -6,27 +6,29 @@ using UnityEngine;
 public class DetectionPoint : MonoBehaviour
 {
     public static DetectionPoint instance;
+    // public Controller controller_Script;
     
-    #region Singleton
-    void Awake() 
-    {
-        if(instance != null) 
-            Destroy(this);
+    // #region Singleton
+    // void Awake() 
+    // {
+    //     if(instance != null) 
+    //         Destroy(this);
         
-        else
-            instance = this;
-    }
-    #endregion
+    //     else
+    //         instance = this;
+    // }
+    // #endregion
 
     private GameManager gameManager;
     [SerializeField] private float detectRadius;
     Vector3 previousPosition;
-    public bool isMoving = false;
+    private bool isMoving = false;
 
     void Start() 
     {
         gameManager = GameManager.instance;
         previousPosition = transform.position;
+        // controller_Script = GetComponentInParent<Controller>();
         // transform.position = point.transform.position;
 
         // // Create a new GameObject for visualization
@@ -46,12 +48,20 @@ public class DetectionPoint : MonoBehaviour
         
     }
 
-    void Update() 
-    {
-        // transform.position = point.transform.position;
-        Moving();
-        PointDetected();
-    }
+    // void Update() 
+    // {
+    //     // transform.position = point.transform.position;
+    //     if(controller_Script.isExpanding) 
+    //     {
+    //         if(Moving())
+                
+    //             if(PointDetected()) 
+    //             {
+    //                 Debug.Log("Scaling Freezed");
+    //                 controller_Script.FreezeScaling(controller_Script._instantiateObj, controller_Script.transform.localScale);
+    //             }
+    //     }
+    // }
 
     public bool Moving() 
     {
@@ -66,7 +76,8 @@ public class DetectionPoint : MonoBehaviour
         {
             isMoving = false;
         }
-
+        
+        // Debug.Log(previousPosition);
         return false;
     }
 
@@ -82,6 +93,7 @@ public class DetectionPoint : MonoBehaviour
             if (point != null && point.pointName == Point.PointName.BRIDGE_POINT)
             {
                 gameManager.connectPointList.Add(point);
+                Debug.Log("Connect point detected!");
                 return true;
             }
         }

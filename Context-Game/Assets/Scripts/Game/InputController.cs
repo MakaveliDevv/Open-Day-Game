@@ -15,7 +15,7 @@ public class InputController : Controller
     {
         if(_instantiatedObj != null)
         {
-            if (Input.GetKeyDown(_keyCodeExtend) && !player.isMoving) // Press down to extend a bridge/ladder
+            if (Input.GetKeyDown(_keyCodeExtend) && !_player.isMoving) // Press down to extend a bridge/ladder
             {
                 // If scaling coroutine is running, stop it
                 if (coroutine != null)

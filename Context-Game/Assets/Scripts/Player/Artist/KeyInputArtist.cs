@@ -17,7 +17,11 @@ public class KeyInputArtist : InputController
 
         if(objectCreated  && extendPoint1 != null && extendPoint2 != null && toExtandBack != null) 
         {
-            ScaleInput(extendPoint1.gameObject, extendPoint2.gameObject, Vector2.right, KeyCode.Space, KeyCode.E, KeyCode.Q, _instantiateObj);
+            if(_playerManag.playerType == PlayerManager.PlayerType.ARTIST)
+            {
+                Debug.Log("Input done by the: " + _playerManag.playerType);
+                ScaleInput(extendPoint1.gameObject, extendPoint2.gameObject, Vector2.right, KeyCode.Space, KeyCode.E, KeyCode.Q, _instantiateObj);
+            }
         }
     }
 }
