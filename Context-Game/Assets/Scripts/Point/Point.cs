@@ -4,20 +4,6 @@ using UnityEngine;
 
 public class Point : MonoBehaviour
 {
-    #region Singleton
-
-    [HideInInspector] public static Point instance;
-
-    void Awake() 
-    {
-        if(instance != null) 
-            Destroy(this);
-        
-        else
-            instance = this;
-    }
-    #endregion
-
     public enum PointName 
     {
         BRIDGE_POINT, 
@@ -31,12 +17,7 @@ public class Point : MonoBehaviour
     Vector3 previousPosition;
     Vector3 currentPosition;
     public bool isMoving;
-    // public string NameTag;
 
-    // void Update() 
-    // {
-    //     gameObject.tag = NameTag;
-    // }
     
     public bool Moving(Transform _point) 
     {

@@ -18,7 +18,6 @@ public class DetectionPoint : MonoBehaviour
     }
     #endregion
 
-    // public GameObject point;
     private GameManager gameManager;
     [SerializeField] private float detectRadius;
     Vector3 previousPosition;
@@ -51,6 +50,7 @@ public class DetectionPoint : MonoBehaviour
     {
         // transform.position = point.transform.position;
         Moving();
+        PointDetected();
     }
 
     public bool Moving() 

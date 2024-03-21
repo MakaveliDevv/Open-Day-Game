@@ -18,8 +18,6 @@ TagManager:
   - ExtendPoint1
   - ExtendPoint2
   - ToExtandBack
-  - StartPoint
-  - EndPoint
   layers:
   - Default
   - TransparentFX

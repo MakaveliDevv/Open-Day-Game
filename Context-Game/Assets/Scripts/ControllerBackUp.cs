@@ -1,67 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine;
 
-public class ControllerBackUp : MonoBehaviour
-{
-    public BridgeSO bridgeSO;
-    protected PlayerController player;
-    protected Coroutine coroutine;
+// public class ControllerBackUp : MonoBehaviour
+// {
+//     public BridgeSO bridgeSO;
+//     protected PlayerController player;
+//     protected Coroutine coroutine;
 
-    // References
-    // protected GameObject newBridge; 
+//     // References
+//     // protected GameObject newBridge; 
 
-    // Points
-    public GameObject detectPoint;
-    protected GameObject newDetectPoint;
+//     // Points
+//     public GameObject detectPoint;
+//     protected GameObject newDetectPoint;
 
-    public GameObject startingPoint;
-    protected GameObject newStartingPoint;
+//     public GameObject startingPoint;
+//     protected GameObject newStartingPoint;
     
-    // public Transform instantiatePoint; 
-    protected Transform pivotStartPoint;
-    protected Transform pivotEndPoint;
-    protected GameObject pivotPoint;
+//     // public Transform instantiatePoint; 
+//     protected Transform pivotStartPoint;
+//     protected Transform pivotEndPoint;
+//     protected GameObject pivotPoint;
 
-    // Scale
-    protected Vector3 initialScale;
-    protected Quaternion initialRotation;
-    public bool isExpanding; 
-    public bool isExpandingBack;
-    public bool stopScalingCuzEndPointReached;
+//     // Scale
+//     protected Vector3 initialScale;
+//     protected Quaternion initialRotation;
+//     public bool isExpanding; 
+//     public bool isExpandingBack;
+//     public bool stopScalingCuzEndPointReached;
 
-    public float timer;
-    public float timeUntilScaleBack = 4f;
-    public float scaleFactor = 10f;
-    public Vector3 teleportOffset;
+//     public float timer;
+//     public float timeUntilScaleBack = 4f;
+//     public float scaleFactor = 10f;
+//     public Vector3 teleportOffset;
 
-    void Start() 
-    {
-        player = GetComponentInParent<PlayerController>();
+//     void Start() 
+//     {
+//         player = GetComponentInParent<PlayerController>();
 
-        initialScale = bridgeSO.initialScale;
-        initialRotation = bridgeSO.finalRotation;
-    }
+//         initialScale = bridgeSO.initialScale;
+//         initialRotation = bridgeSO.finalRotation;
+//     }
 
 
-    protected IEnumerator Scalingg(BridgeSO _scriptObj, GameObject _object, Vector3 _targetDirection)
-    {
-        while (true) // Continuously scale
-        {
-            Vector3 initialScale = new(_object.transform.localScale.x, _scriptObj.height, _scriptObj.depth);
-            Vector3 targetScale = initialScale + scaleFactor * Time.deltaTime * _targetDirection;
-            _object.transform.localScale = targetScale;
-            isExpanding = true;
+//     protected IEnumerator Scalingg(BridgeSO _scriptObj, GameObject _object, Vector3 _targetDirection)
+//     {
+//         while (true) // Continuously scale
+//         {
+//             Vector3 initialScale = new(_object.transform.localScale.x, _scriptObj.height, _scriptObj.depth);
+//             Vector3 targetScale = initialScale + scaleFactor * Time.deltaTime * _targetDirection;
+//             _object.transform.localScale = targetScale;
+//             isExpanding = true;
 
-            // Check for connect points while scaling
-            if (DetectionPoint.instance.PointDetected())
-            {
-                // Stop scaling
-                // FreezeScaling(_object.transform.localScale);
-            } 
-            yield return null;
-        }
-    }
+//             // Check for connect points while scaling
+//             if (DetectionPoint.instance.PointDetected())
+//             {
+//                 // Stop scaling
+//                 // FreezeScaling(_object.transform.localScale);
+//             } 
+//             yield return null;
+//         }
+//     }
 
     // EXTEND TOWARDS THE GIVEN POINT
     // protected IEnumerator Scaling(Vector3 _targetDirection)
@@ -201,4 +201,4 @@ public class ControllerBackUp : MonoBehaviour
         // Allow player to move again
         // player.rb.velocity = new Vector2(player.inputDirection.x, player.rb.velocity.y);
         // player.isMoving = true;
-}
+// }

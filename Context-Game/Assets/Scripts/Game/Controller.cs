@@ -7,7 +7,6 @@ public class Controller : MonoBehaviour
     protected PlayerController player;
     protected Coroutine coroutine;
     protected PlayerManager playerManag;
-    // public ObjectPoint[] objs;
 
 
     // Object Points
@@ -54,7 +53,7 @@ public class Controller : MonoBehaviour
         if (_instantiateObj == null)
         {   
             // Game Object
-            _instantiateObj = Instantiate(_scriptObj.@object, instantiatePoint.transform.position, Quaternion.identity);
+            _instantiateObj = Instantiate(_scriptObj.@object, instantiatePoint.transform.position, _scriptObj.finalRotation);
             _instantiateObj.transform.SetParent(player.transform);
             _instantiateObj.name = _scriptObj.name;
 
@@ -62,13 +61,14 @@ public class Controller : MonoBehaviour
 
             for (int i = 0; i < objPoints.Length; i++)
             {
-                Debug.Log(objPoints[i].NameTag);
 
                 extendPoint1 = GameObject.FindGameObjectWithTag(objPoints[0].NameTag).transform;
                 extendPoint2 = GameObject.FindGameObjectWithTag(objPoints[1].NameTag).transform;
                 toExtandBack = GameObject.FindGameObjectWithTag(objPoints[2].NameTag).transform; 
                 startPoint = GameObject.FindGameObjectWithTag(objPoints[3].NameTag).transform;
                 endPoint = GameObject.FindGameObjectWithTag(objPoints[4].NameTag).transform;
+                
+                Debug.Log(objPoints[i].NameTag);
             }
 
             // Set the extendPoint1 scale to the scale of the @object

@@ -92,7 +92,7 @@ public class InputController : Controller
                     return true;
 
                         
-                } else if(Input.GetKeyDown(_keyCodeScaleBackToEnd) && playerManag.playerType == PlayerManager.PlayerType.ARTIST) // To go to the end point (is for the artist)
+                } else if(Input.GetKeyDown(_keyCodeScaleBackToEnd)) // To go to the end point (is for the artist)  && playerManag.playerType == PlayerManager.PlayerType.ARTIST
                 {
                     // Move player to the endpoint
                     stopScalingCuzEndPointReached = false;

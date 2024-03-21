@@ -15,6 +15,12 @@ public class Ladder : MonoBehaviour
     {
         if (collider.GetComponent<PlayerManager>()) 
         {
+            // PlayerManager player  = collider.GetComponent<PlayerManager>();
+
+            // if(player.playerType == PlayerManager.PlayerType.DEVELOPER) 
+            //     return;
+
+
             playerDetected = true; // Set the flag to true when player is detected
             rbPlayer = collider.GetComponent<Rigidbody2D>();
             
@@ -46,4 +52,8 @@ public class Ladder : MonoBehaviour
             playerDetected = false; // Reset the flag when player exits the trigger area
         }
     }
+
+    // ONLY THE DESIGNER AND DEVELOPER MAY CLIMB THE LADDER
+
+
 }
