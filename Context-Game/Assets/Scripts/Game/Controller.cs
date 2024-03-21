@@ -7,6 +7,7 @@ public class Controller : MonoBehaviour
     protected PlayerController player;
     protected Coroutine coroutine;
     protected PlayerManager playerManag;
+    // public ObjectPoint[] objs;
 
 
     // Object Points
@@ -21,6 +22,7 @@ public class Controller : MonoBehaviour
     [SerializeField] public bool isExpanding; 
     [SerializeField] public bool isExpandingBack;
     [SerializeField] public bool stopScalingCuzEndPointReached;
+    public bool teleportedToEndPoint;
     protected bool objectCreated;
 
     protected float timer;
@@ -40,31 +42,38 @@ public class Controller : MonoBehaviour
     void Start() 
     {
         player = GetComponentInParent<PlayerController>();
+        StartCoroutine(CreateObject());
     }
 
-    protected void CreateObject() 
+    protected IEnumerator CreateObject() 
     {
+        yield return new WaitForSeconds(2f);
+
         objectCreated = false;
 
         if (_instantiateObj == null)
         {   
             // Game Object
-            _instantiateObj = Instantiate(_scriptObj.@object, instantiatePoint.transform.position, _scriptObj.finalRotation);
-            _instantiateObj.name = "Expandable object";
+            _instantiateObj = Instantiate(_scriptObj.@object, instantiatePoint.transform.position, Quaternion.identity);
+            _instantiateObj.transform.SetParent(player.transform);
+            _instantiateObj.name = _scriptObj.name;
 
-            // Find game objects on the @object
-            extendPoint1 = GameObject.FindGameObjectWithTag("ExtendPoint1").transform;
-            extendPoint2 = GameObject.FindGameObjectWithTag("ExtendPoint2").transform;
-            toExtandBack = GameObject.FindGameObjectWithTag("ToExtandBack").transform; 
+            ObjectPoint[] objPoints = _instantiateObj.GetComponentsInChildren<ObjectPoint>();
 
+            for (int i = 0; i < objPoints.Length; i++)
+            {
+                Debug.Log(objPoints[i].NameTag);
+
+                extendPoint1 = GameObject.FindGameObjectWithTag(objPoints[0].NameTag).transform;
+                extendPoint2 = GameObject.FindGameObjectWithTag(objPoints[1].NameTag).transform;
+                toExtandBack = GameObject.FindGameObjectWithTag(objPoints[2].NameTag).transform; 
+                startPoint = GameObject.FindGameObjectWithTag(objPoints[3].NameTag).transform;
+                endPoint = GameObject.FindGameObjectWithTag(objPoints[4].NameTag).transform;
+            }
 
             // Set the extendPoint1 scale to the scale of the @object
             extendPoint1.localScale = _scriptObj.initialScale;
             
-            // The start and end point of the @object
-            startPoint = GameObject.FindGameObjectWithTag("StartPoint").transform;
-            endPoint = GameObject.FindGameObjectWithTag("EndPoint").transform;
-
             // Start Pivot Point
             startPointObj = Instantiate(_scriptObj.startObj, extendPoint1.position, Quaternion.identity);
             startPointObj.name = "NewStartPointPrefab";
@@ -74,15 +83,11 @@ public class Controller : MonoBehaviour
             detectObj.name = "Detect Point";
 
             objectCreated = true;
-
         }
 
-        if (_instantiateObj != null && player != null)
-            _instantiateObj.transform.SetParent(player.transform);
     }
 
-
-    protected IEnumerator Scalingg(GameObject _scaleObj, Vector3 _targetDirection)
+    protected IEnumerator Scaling(GameObject _scaleObj, Vector3 _targetDirection)
     {
         while (true) // Continuously scale
         {
@@ -123,14 +128,14 @@ public class Controller : MonoBehaviour
         // Ensure the scale is exactly the target scale when done
         _scaleObj.transform.localScale = _targetScale;
         isExpandingBack = false;
-
-        // Reset stopScaling flag after scaling back
-        stopScalingCuzEndPointReached = false;
-}
+    }
 
     // SCALE BACK TOWARDS THE ENDPOINT
     protected IEnumerator ExpandBackTowardsEndPoint(GameObject _scaleObj, Vector3 _startPosition)
     {
+        teleportedToEndPoint = false;
+        stopScalingCuzEndPointReached = true;
+        
         float elapsedTime = 0f;
         float duration = 2f;
         Vector3 targetScale = new(0, 1, 1);
@@ -142,7 +147,7 @@ public class Controller : MonoBehaviour
             float t = elapsedTime / duration;
             _scaleObj.transform.localScale = Vector3.Lerp(_startPosition, targetScale, t);
             
-            if(_point.Movingg(startPointObj.transform)) 
+            if(_point.Moving(startPointObj.transform)) 
             {
                 // Debug.Log("We are moving");
                 player.playerRenderer.SetActive(false);
@@ -160,9 +165,17 @@ public class Controller : MonoBehaviour
         if(_scaleObj.transform.localScale == targetScale) 
         {
             Debug.Log("Reached the endpoint");
-            player.playerRenderer.SetActive(true);
             player.transform.position = detectObj.transform.position + teleportOffset;
+
+            teleportedToEndPoint = true;
+            player.playerRenderer.SetActive(true);
         }
+
+        if(teleportedToEndPoint) 
+        {
+            Debug.Log("Teleported to the end point");
+        }
+
 
         if(DestroyGameObject(_instantiateObj)) 
         {
@@ -170,11 +183,15 @@ public class Controller : MonoBehaviour
             DestroyGameObject(startPointObj);
             
             objectCreated = false;
-            stopScalingCuzEndPointReached = false;
             _point.isMoving = false;
             
             player.rb.velocity = player.inputDirection;
         }
+        
+        stopScalingCuzEndPointReached = false;
+        teleportedToEndPoint = false;
+
+        yield return CreateObject(); // Start the creation process again
     }
 
     public bool DestroyGameObject(GameObject _object) 

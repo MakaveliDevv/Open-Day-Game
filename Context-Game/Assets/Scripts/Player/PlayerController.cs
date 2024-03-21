@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -9,6 +10,9 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public Rigidbody2D rb;
     public float fallMultiplier;
     private Vector2 vecGravity;
+    public Transform castPosition;
+    public LayerMask layermask;
+    public float radius;
 
     // Movement
     [SerializeField] private float moveSpeed;
@@ -17,6 +21,8 @@ public class PlayerController : MonoBehaviour
     // Scaling
     private Controller controller;
     public GameObject playerRenderer;
+    public bool playerIsGrounded;
+    private GameObject sphereVisualizer;
     
     void Start() 
     {
@@ -30,6 +36,17 @@ public class PlayerController : MonoBehaviour
     { 
         inputDirection = new(Input.GetAxisRaw("Horizontal"), 0f);
         MovePlayer();
+
+        Collider2D hit = Physics2D.OverlapCircle(castPosition.position, radius, layermask);
+        if(hit != null) 
+        {
+
+            playerIsGrounded = true;
+
+        } else 
+        {
+            playerIsGrounded = false;
+        }
     }
 
     private void MovePlayer() 
@@ -39,7 +56,8 @@ public class PlayerController : MonoBehaviour
         if(inputDirection != new Vector2(0f, 0f) 
         && !controller.isExpanding 
         && !controller.isExpandingBack
-        && !controller.stopScalingCuzEndPointReached) 
+        && !controller.stopScalingCuzEndPointReached
+        && playerIsGrounded) 
         {
             isMoving = true;
 
@@ -56,6 +74,6 @@ public class PlayerController : MonoBehaviour
         if(rb.velocity.y < 0.03f) 
         {
             rb.velocity -= fallMultiplier * Time.deltaTime * vecGravity; 
-        }
+        }        
     }
 }

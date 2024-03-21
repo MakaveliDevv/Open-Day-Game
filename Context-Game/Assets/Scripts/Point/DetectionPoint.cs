@@ -50,7 +50,6 @@ public class DetectionPoint : MonoBehaviour
     void Update() 
     {
         // transform.position = point.transform.position;
-        PointDetected();
         Moving();
     }
 

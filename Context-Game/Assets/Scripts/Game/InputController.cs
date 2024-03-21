@@ -24,7 +24,7 @@ public class InputController : Controller
                 if(!stopScalingCuzEndPointReached) 
                 {
                     isExpandingBack = false; // Need to set this otherwise it bugs when pressing the button down to fast
-                    coroutine = StartCoroutine(Scalingg(_objectToScale, _direction));
+                    coroutine = StartCoroutine(Scaling(_objectToScale, _direction));
                     // Debug.Log("Can scale");
                     return true;
                 } 
@@ -61,7 +61,7 @@ public class InputController : Controller
                         if(coroutine != null)
                             StopCoroutine(coroutine);
 
-                        StartCoroutine(Scalingg(_objectToScale, _direction)); 
+                        StartCoroutine(Scaling(_objectToScale, _direction)); 
                         // Debug.Log("Can scale from scaling back after freezing and time ran out");
                         return true;
                     }
@@ -81,7 +81,7 @@ public class InputController : Controller
                         if(coroutine != null)
                             StopCoroutine(coroutine);
 
-                        StartCoroutine(Scalingg(_objectToScale, _direction)); 
+                        StartCoroutine(Scaling(_objectToScale, _direction)); 
                         // Debug.Log("Can scale from scaling back after freezing and pressing scale back button");
                         return true;
 

@@ -17,7 +17,6 @@ public class PlayerManager : MonoBehaviour
         else
             instance = this;
 
-        // DontDestroyOnLoad(instance);    
     }
     #endregion
 
@@ -33,6 +32,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     public PlayerType playerType;
+
+    public void Update() 
+    {
+        WhichPlayer();
+    }
 
     public void WhichPlayer() 
     {

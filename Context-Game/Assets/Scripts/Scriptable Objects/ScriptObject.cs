@@ -8,7 +8,7 @@ public class ScriptObject : ScriptableObject
     public GameObject @object, detectObj, startObj;
     public Vector3 initialScale = new(0, 0, 0);
     private Quaternion initialRotation = Quaternion.identity;
-    public Quaternion zRotation = Quaternion.Euler(0, 0, 90f);
+    public Quaternion zRotation = Quaternion.Euler(0, 0, 0);
 
     [HideInInspector] public Quaternion finalRotation;
 
