@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 475139a87bf36d6449d7ddefbc1340ec, type: 3}
+  m_Name: Object_Bridge
+  m_EditorClassIdentifier: 
+  object: {fileID: 542491395960414837, guid: c76bdc48773bc17429d0611b9332457a, type: 3}
+  detectObj: {fileID: 2194041748212303040, guid: 2995f5c9eba479244a24a698210017a2, type: 3}
+  startObj: {fileID: 8718376974585649467, guid: 7c2f126ed025c8e4088985e05db99e42, type: 3}
+  initialScale: {x: 0.2, y: 0.25, z: 1}
+  zRotation: {x: 0, y: 0, z: 0, w: 0}
+  finalRotation: {x: 0, y: 0, z: 0.70710677, w: 0.70710677}

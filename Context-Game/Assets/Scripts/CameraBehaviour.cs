@@ -8,25 +8,9 @@ public class CameraBehaviour : MonoBehaviour
     public GameObject player;
     public float cameraSpeed;
     
-    void Start()
-    {
-        ResetCamera();
-        SetPosition(cameraPosition);
-    }
-
     void Update()
     {
         FollowPlayer();
-    }
-
-    private void ResetCamera() 
-    {
-        transform.position = new(0f, 0f, -10f);
-    }
-
-    private void UpdateCameraPosition() 
-    {
-        cameraPosition.
     }
 
     private void SetPosition(Vector2 _position) 
@@ -38,8 +22,9 @@ public class CameraBehaviour : MonoBehaviour
     {
         if(player != null) 
         {
-            Vector3 targetPosition = player.transform.position + cameraPosition;
-            transform.position = Vector2.Lerp(transform.position, targetPosition, cameraSpeed * Time.deltaTime);
+            Vector3 targetPosition = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z - 10f);
+            transform.position = Vector3.Lerp(transform.position, targetPosition, cameraSpeed * Time.deltaTime);
         }
     }
+
 }

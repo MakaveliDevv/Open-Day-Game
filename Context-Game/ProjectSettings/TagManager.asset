@@ -3,7 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - DetectPoint
+  - Extend_Point_1_Artist
+  - Extend_Point_2_Artist
+  - To_Extand_Back_Artist
+  - Start_Point_Artist
+  - End_Point_Artist
+  - Extend_Point_1_Developer
+  - Extend_Point_2_Developer
+  - To_Extand_Back_Developer
+  - Start_Point_Developer
+  - End_Point_Developer
+  - ExtendPoint1
+  - ExtendPoint2
+  - ToExtandBack
   layers:
   - Default
   - TransparentFX
@@ -14,8 +28,8 @@ TagManager:
   - Platform
   - 
   - 
-  - 
-  - 
+  - GrapplingPlatform
+  - EndPoint
   - 
   - 
   - 
