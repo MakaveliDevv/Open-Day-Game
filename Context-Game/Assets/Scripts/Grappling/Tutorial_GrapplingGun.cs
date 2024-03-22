@@ -96,6 +96,16 @@ public class Tutorial_GrapplingGun : MonoBehaviour
             Vector2 mousePos = m_camera.ScreenToWorldPoint(Input.mousePosition);
             RotateGun(mousePos, true);
         }
+
+        if(Input.GetKeyDown(KeyCode.Mouse1)) 
+        {
+            launchToPoint = true;
+        } 
+
+        if(Input.GetKeyUp(KeyCode.Mouse1)) 
+        {
+            launchToPoint = false;
+        }
     }
 
     void RotateGun(Vector3 lookPoint, bool allowRotationOverTime)
