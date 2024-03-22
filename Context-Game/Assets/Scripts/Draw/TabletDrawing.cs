@@ -18,7 +18,7 @@ public class TabletDrawing : MonoBehaviour
         drawingTexture = new Texture2D(textureWidth, textureHeight);
 
         // Find and assign the TabletInput script
-        tabletInput = FindObjectOfType<TabletInput>();
+        tabletInput = Object.FindFirstObjectByType<TabletInput>();
         if (tabletInput == null)
         {
             Debug.LogError("TabletInput script not found in the scene.");
