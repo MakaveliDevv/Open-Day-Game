@@ -18,6 +18,7 @@ TagManager:
   - ExtendPoint1
   - ExtendPoint2
   - ToExtandBack
+  - StartPoint
   layers:
   - Default
   - TransparentFX
@@ -54,4 +55,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Achtergrond
+    uniqueID: 2500966339
+    locked: 0
+  - name: Platforms
+    uniqueID: 3473010537
+    locked: 0
+  - name: Props
+    uniqueID: 165030925
     locked: 0
