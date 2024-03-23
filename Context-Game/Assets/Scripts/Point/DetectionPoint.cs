@@ -48,20 +48,6 @@ public class DetectionPoint : MonoBehaviour
         
     }
 
-    // void Update() 
-    // {
-    //     // transform.position = point.transform.position;
-    //     if(controller_Script.isExpanding) 
-    //     {
-    //         if(Moving())
-                
-    //             if(PointDetected()) 
-    //             {
-    //                 Debug.Log("Scaling Freezed");
-    //                 controller_Script.FreezeScaling(controller_Script._instantiateObj, controller_Script.transform.localScale);
-    //             }
-    //     }
-    // }
 
     public bool Moving() 
     {
@@ -90,7 +76,7 @@ public class DetectionPoint : MonoBehaviour
         {
             Point point = hitPoint.GetComponent<Point>();
 
-            if (point != null && point.pointName == Point.PointName.BRIDGE_POINT)
+            if (point != null)
             {
                 gameManager.connectPointList.Add(point);
                 Debug.Log("Connect point detected!");

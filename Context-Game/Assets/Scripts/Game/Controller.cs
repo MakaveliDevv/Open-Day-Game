@@ -109,6 +109,7 @@ public class Controller : MonoBehaviour
             if (_detectPoint.PointDetected())
             {
                 Debug.Log("Point detected!, calling from controller script");
+                
                 // Stop scaling
                 FreezeScaling(_scaleObj, _scaleObj.transform.localScale);
             } 

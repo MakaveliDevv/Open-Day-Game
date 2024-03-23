@@ -37,9 +37,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Movement"",
+                    ""name"": ""MovementArtist"",
                     ""type"": ""Value"",
                     ""id"": ""0f6c651f-6d1f-4cb5-8fc4-cbe775b406f8"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MovementDeveloper"",
+                    ""type"": ""Value"",
+                    ""id"": ""db6d099e-f683-4f16-8d89-a2867fd6c136"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MovementDesigner"",
+                    ""type"": ""Value"",
+                    ""id"": ""48ee38a7-8d99-4816-bc04-195dd70e025b"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -59,24 +77,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""08d4f19f-0e41-4baa-9454-ddae9b13b3da"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Jump"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""2D Vector"",
                     ""id"": ""be029e7d-e0d3-4251-b9ca-2908c321b87e"",
                     ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Movement"",
+                    ""action"": ""MovementArtist"",
                     ""isComposite"": true,
                     ""isPartOfComposite"": false
                 },
@@ -87,7 +94,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Movement"",
+                    ""action"": ""MovementArtist"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -98,7 +105,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Movement"",
+                    ""action"": ""MovementArtist"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -109,7 +116,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Movement"",
+                    ""action"": ""MovementArtist"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -120,20 +127,119 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
-                    ""action"": ""Movement"",
+                    ""action"": ""MovementArtist"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""3ac5a6c9-e0b9-4909-97fc-ab7f0ccbacea"",
-                    ""path"": ""<Gamepad>/leftStick"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""9f2a733d-840f-4d84-8869-978180dfd0e4"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
-                    ""processors"": ""StickDeadzone,NormalizeVector2"",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Movement"",
-                    ""isComposite"": false,
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementDeveloper"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""8fae5f42-c75b-4e19-98df-004c0d6dd7ca"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MovementDeveloper"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""2e1e8011-bfb0-4577-887d-fed928c68d13"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MovementDeveloper"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""ea7e7689-ebb0-4c30-bdd6-2d8e80649758"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MovementDeveloper"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""8ce8582d-09aa-4ed4-ae8e-e7a98977fc80"",
+                    ""path"": ""<Keyboard>/h"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MovementDeveloper"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""7b30fab5-f727-4198-ad31-01eaa9ced568"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovementDesigner"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""39d471da-4a03-4413-be63-07a06ec85fd4"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MovementDesigner"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""b066fc31-a4a4-4014-99aa-070c447f1391"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MovementDesigner"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""40d72257-063a-4fb2-9608-8abf29979e27"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MovementDesigner"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""4ba8c965-328d-4933-96a4-944cfc018bb9"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""MovementDesigner"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         },
@@ -194,7 +300,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
+        m_Player_MovementArtist = m_Player.FindAction("MovementArtist", throwIfNotFound: true);
+        m_Player_MovementDeveloper = m_Player.FindAction("MovementDeveloper", throwIfNotFound: true);
+        m_Player_MovementDesigner = m_Player.FindAction("MovementDesigner", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
@@ -260,13 +368,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Movement;
+    private readonly InputAction m_Player_MovementArtist;
+    private readonly InputAction m_Player_MovementDeveloper;
+    private readonly InputAction m_Player_MovementDesigner;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Movement => m_Wrapper.m_Player_Movement;
+        public InputAction @MovementArtist => m_Wrapper.m_Player_MovementArtist;
+        public InputAction @MovementDeveloper => m_Wrapper.m_Player_MovementDeveloper;
+        public InputAction @MovementDesigner => m_Wrapper.m_Player_MovementDesigner;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -279,9 +391,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Movement.started += instance.OnMovement;
-            @Movement.performed += instance.OnMovement;
-            @Movement.canceled += instance.OnMovement;
+            @MovementArtist.started += instance.OnMovementArtist;
+            @MovementArtist.performed += instance.OnMovementArtist;
+            @MovementArtist.canceled += instance.OnMovementArtist;
+            @MovementDeveloper.started += instance.OnMovementDeveloper;
+            @MovementDeveloper.performed += instance.OnMovementDeveloper;
+            @MovementDeveloper.canceled += instance.OnMovementDeveloper;
+            @MovementDesigner.started += instance.OnMovementDesigner;
+            @MovementDesigner.performed += instance.OnMovementDesigner;
+            @MovementDesigner.canceled += instance.OnMovementDesigner;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -289,9 +407,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Movement.started -= instance.OnMovement;
-            @Movement.performed -= instance.OnMovement;
-            @Movement.canceled -= instance.OnMovement;
+            @MovementArtist.started -= instance.OnMovementArtist;
+            @MovementArtist.performed -= instance.OnMovementArtist;
+            @MovementArtist.canceled -= instance.OnMovementArtist;
+            @MovementDeveloper.started -= instance.OnMovementDeveloper;
+            @MovementDeveloper.performed -= instance.OnMovementDeveloper;
+            @MovementDeveloper.canceled -= instance.OnMovementDeveloper;
+            @MovementDesigner.started -= instance.OnMovementDesigner;
+            @MovementDesigner.performed -= instance.OnMovementDesigner;
+            @MovementDesigner.canceled -= instance.OnMovementDesigner;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -376,7 +500,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnJump(InputAction.CallbackContext context);
-        void OnMovement(InputAction.CallbackContext context);
+        void OnMovementArtist(InputAction.CallbackContext context);
+        void OnMovementDeveloper(InputAction.CallbackContext context);
+        void OnMovementDesigner(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

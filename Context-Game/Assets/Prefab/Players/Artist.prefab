@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2937298007126152158}
   - component: {fileID: 3000175315604166511}
   - component: {fileID: 9010615374479353837}
+  - component: {fileID: 5813240395174528973}
   m_Layer: 0
   m_Name: Artist
   m_TagString: Untagged
@@ -220,6 +221,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5813240395174528973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324126851814296604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f429c2eb26c7da3479cd3174ef46e7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 15
 --- !u!1 &7242625736351550059
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,10 +321,21 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 2fe79239e776c094ebb0f1f22f99279f, type: 2}
+    - target: {fileID: 8979512911762384937, guid: 72f0c377ca2887048921b119d199c24b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8979512911762384937, guid: 72f0c377ca2887048921b119d199c24b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.48
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 521158940286858253, guid: 72f0c377ca2887048921b119d199c24b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8901639139235218240}
   m_SourcePrefab: {fileID: 100100000, guid: 72f0c377ca2887048921b119d199c24b, type: 3}
 --- !u!4 &2291596877590860297 stripped
 Transform:
@@ -327,3 +352,53 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 521158940286858253, guid: 72f0c377ca2887048921b119d199c24b, type: 3}
   m_PrefabInstance: {fileID: 7156431270347799072}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8901639139235218240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7235955400942734893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 6e6b49395bf6a404a9f6230361d83d94, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 18e8d37f-77f3-4afb-971c-93c33e5e2c44
+    m_ActionName: 'Player/Jump[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0f6c651f-6d1f-4cb5-8fc4-cbe775b406f8
+    m_ActionName: 'Player/MovementArtist[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: db6d099e-f683-4f16-8d89-a2867fd6c136
+    m_ActionName: 'Player/MovementDeveloper[/Keyboard/t,/Keyboard/g,/Keyboard/f,/Keyboard/h]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 48ee38a7-8d99-4816-bc04-195dd70e025b
+    m_ActionName: 'Player/MovementDesigner[/Keyboard/i,/Keyboard/k,/Keyboard/j,/Keyboard/l]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8dfee9c7-8c6a-4a8e-87ff-656a50cc12d4
+    m_ActionName: 'UI/Submit[/Keyboard/space]'
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}

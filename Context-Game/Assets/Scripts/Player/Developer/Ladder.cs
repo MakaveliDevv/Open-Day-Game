@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Ladder : MonoBehaviour
 {
     private Rigidbody2D rbPlayer;
+    private PlayerController _playerContr;
     public float speed = 6f;
     
     #pragma warning disable IDE0052 // Remove unread private members
-    private bool playerDetected = false;
     private bool playerMovingOnLadder = false;
     #pragma warning restore IDE0052 // Remove unread private members
 
@@ -18,14 +19,10 @@ public class Ladder : MonoBehaviour
     {
         if (collider.GetComponent<PlayerManager>()) 
         {
-            // PlayerManager player  = collider.GetComponent<PlayerManager>();
-
-            // if(player.playerType == PlayerManager.PlayerType.DEVELOPER) 
-            //     return;
-
-
-            playerDetected = true; // Set the flag to true when player is detected
+            _playerContr = collider.GetComponent<PlayerController>();
             rbPlayer = collider.GetComponent<Rigidbody2D>();
+
+            _playerContr.playerDetected = true; // Set the flag to true when player is detected
             
             // Handle vertical movement here if needed
             float verticalInput = Input.GetAxisRaw("Vertical");
@@ -52,11 +49,11 @@ public class Ladder : MonoBehaviour
     {
         if (collider.GetComponent<PlayerManager>()) 
         {
-            playerDetected = false; // Reset the flag when player exits the trigger area
+            _playerContr.playerDetected = false; // Reset the flag when player exits the trigger area
         }
     }
 
-    // ONLY THE DESIGNER AND DEVELOPER MAY CLIMB THE LADDER
+    // ONLY THE DESIGNER AND ARTIST MAY CLIMB THE LADDER
 
 
 }

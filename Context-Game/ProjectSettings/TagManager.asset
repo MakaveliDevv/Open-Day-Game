@@ -18,6 +18,13 @@ TagManager:
   - ExtendPoint1
   - ExtendPoint2
   - ToExtandBack
+  - DesignersObject
+  - StartPoint
+  - Extend_Point_1_Designer
+  - Extend_Point_2_Designer
+  - To_Extand_Back_Designer
+  - Start_Point_Designer
+  - End_Point_Designer
   layers:
   - Default
   - TransparentFX
