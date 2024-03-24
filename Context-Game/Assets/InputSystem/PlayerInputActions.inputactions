@@ -248,6 +248,150 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "PlayerArtist",
+            "id": "a742ff8f-b695-41ba-bfde-3c2b1cc7a760",
+            "actions": [
+                {
+                    "name": "InputArtistE",
+                    "type": "Value",
+                    "id": "647911f8-8f0f-4730-a341-02d2e7ba5386",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "InputArtistQ",
+                    "type": "Value",
+                    "id": "d9ed867b-32c4-4c03-8d40-2c654170d51f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a5879c2e-b166-43dc-9564-20229951e48d",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "InputArtistQ",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17baa184-8174-4c3a-842f-1815c3f62a1d",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "InputArtistE",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PlayerDeveloper",
+            "id": "29efb38b-5fdd-4162-8b47-3f5e261621a4",
+            "actions": [
+                {
+                    "name": "InputDeveloperY",
+                    "type": "Value",
+                    "id": "bf9d9656-c56a-4ae3-ab44-52db093026ef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "InputDeveloperR",
+                    "type": "Value",
+                    "id": "a0e8a1b4-3e99-42d0-ab16-605c455794c6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c155d955-3150-4517-a4dd-d309973deb11",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "InputDeveloperR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a79c42eb-252c-4a58-8f2d-4f9bbe1f189e",
+                    "path": "<Keyboard>/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "InputDeveloperY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PlayerDesigner",
+            "id": "08061a8c-5064-4677-9720-d487d0c4ec05",
+            "actions": [
+                {
+                    "name": "InputDesignerO",
+                    "type": "Value",
+                    "id": "730223dc-1335-4f5d-8bae-36f47655dbe5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "InputDesignerU",
+                    "type": "Value",
+                    "id": "134f7bb2-f79a-4b31-b504-71574aeb2859",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8179e11d-464a-43f9-a98b-dfd5cb858eee",
+                    "path": "<Keyboard>/u",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "InputDesignerU",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03593ab8-39bf-4078-93a4-83730ef3022e",
+                    "path": "<Keyboard>/o",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "InputDesignerO",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

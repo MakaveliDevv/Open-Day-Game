@@ -5,27 +5,19 @@ using UnityEngine;
 public class RotateInputTest : MonoBehaviour
 {
     public GameObject testObj;
-    void Start() 
-    {
-        if(testObj == null)
-            return;
-            
-        testObj = GameObject.FindGameObjectWithTag("DesignersObject");
-    }
+    // void Start() 
+    // {
+    //     if(testObj == null)
+    //         return;
+    // }
 
     void Update() 
     {
         // Get the instantiated object
         if (testObj == null)
-            return;
-
+        {
             testObj = GameObject.FindGameObjectWithTag("DesignersObject");
-            if (testObj == null)
-            {
-                Debug.Log("No object found with tag 'DesignersObject'");
-                return;
-            }
-        
+        }
 
         // If left mouse button pressed, rotate -10 degrees around Z-axis
         if (Input.GetKeyDown(KeyCode.Mouse0)) 

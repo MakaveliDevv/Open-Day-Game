@@ -270,6 +270,150 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PlayerArtist"",
+            ""id"": ""a742ff8f-b695-41ba-bfde-3c2b1cc7a760"",
+            ""actions"": [
+                {
+                    ""name"": ""InputArtistE"",
+                    ""type"": ""Value"",
+                    ""id"": ""647911f8-8f0f-4730-a341-02d2e7ba5386"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""InputArtistQ"",
+                    ""type"": ""Value"",
+                    ""id"": ""d9ed867b-32c4-4c03-8d40-2c654170d51f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a5879c2e-b166-43dc-9564-20229951e48d"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""InputArtistQ"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17baa184-8174-4c3a-842f-1815c3f62a1d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""InputArtistE"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""PlayerDeveloper"",
+            ""id"": ""29efb38b-5fdd-4162-8b47-3f5e261621a4"",
+            ""actions"": [
+                {
+                    ""name"": ""InputDeveloperY"",
+                    ""type"": ""Value"",
+                    ""id"": ""bf9d9656-c56a-4ae3-ab44-52db093026ef"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""InputDeveloperR"",
+                    ""type"": ""Value"",
+                    ""id"": ""a0e8a1b4-3e99-42d0-ab16-605c455794c6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""c155d955-3150-4517-a4dd-d309973deb11"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""InputDeveloperR"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a79c42eb-252c-4a58-8f2d-4f9bbe1f189e"",
+                    ""path"": ""<Keyboard>/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""InputDeveloperY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""PlayerDesigner"",
+            ""id"": ""08061a8c-5064-4677-9720-d487d0c4ec05"",
+            ""actions"": [
+                {
+                    ""name"": ""InputDesignerO"",
+                    ""type"": ""Value"",
+                    ""id"": ""730223dc-1335-4f5d-8bae-36f47655dbe5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""InputDesignerU"",
+                    ""type"": ""Value"",
+                    ""id"": ""134f7bb2-f79a-4b31-b504-71574aeb2859"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8179e11d-464a-43f9-a98b-dfd5cb858eee"",
+                    ""path"": ""<Keyboard>/u"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""InputDesignerU"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03593ab8-39bf-4078-93a4-83730ef3022e"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""InputDesignerO"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -306,6 +450,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
+        // PlayerArtist
+        m_PlayerArtist = asset.FindActionMap("PlayerArtist", throwIfNotFound: true);
+        m_PlayerArtist_InputArtistE = m_PlayerArtist.FindAction("InputArtistE", throwIfNotFound: true);
+        m_PlayerArtist_InputArtistQ = m_PlayerArtist.FindAction("InputArtistQ", throwIfNotFound: true);
+        // PlayerDeveloper
+        m_PlayerDeveloper = asset.FindActionMap("PlayerDeveloper", throwIfNotFound: true);
+        m_PlayerDeveloper_InputDeveloperY = m_PlayerDeveloper.FindAction("InputDeveloperY", throwIfNotFound: true);
+        m_PlayerDeveloper_InputDeveloperR = m_PlayerDeveloper.FindAction("InputDeveloperR", throwIfNotFound: true);
+        // PlayerDesigner
+        m_PlayerDesigner = asset.FindActionMap("PlayerDesigner", throwIfNotFound: true);
+        m_PlayerDesigner_InputDesignerO = m_PlayerDesigner.FindAction("InputDesignerO", throwIfNotFound: true);
+        m_PlayerDesigner_InputDesignerU = m_PlayerDesigner.FindAction("InputDesignerU", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -479,6 +635,168 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // PlayerArtist
+    private readonly InputActionMap m_PlayerArtist;
+    private List<IPlayerArtistActions> m_PlayerArtistActionsCallbackInterfaces = new List<IPlayerArtistActions>();
+    private readonly InputAction m_PlayerArtist_InputArtistE;
+    private readonly InputAction m_PlayerArtist_InputArtistQ;
+    public struct PlayerArtistActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public PlayerArtistActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @InputArtistE => m_Wrapper.m_PlayerArtist_InputArtistE;
+        public InputAction @InputArtistQ => m_Wrapper.m_PlayerArtist_InputArtistQ;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerArtist; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerArtistActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerArtistActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerArtistActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerArtistActionsCallbackInterfaces.Add(instance);
+            @InputArtistE.started += instance.OnInputArtistE;
+            @InputArtistE.performed += instance.OnInputArtistE;
+            @InputArtistE.canceled += instance.OnInputArtistE;
+            @InputArtistQ.started += instance.OnInputArtistQ;
+            @InputArtistQ.performed += instance.OnInputArtistQ;
+            @InputArtistQ.canceled += instance.OnInputArtistQ;
+        }
+
+        private void UnregisterCallbacks(IPlayerArtistActions instance)
+        {
+            @InputArtistE.started -= instance.OnInputArtistE;
+            @InputArtistE.performed -= instance.OnInputArtistE;
+            @InputArtistE.canceled -= instance.OnInputArtistE;
+            @InputArtistQ.started -= instance.OnInputArtistQ;
+            @InputArtistQ.performed -= instance.OnInputArtistQ;
+            @InputArtistQ.canceled -= instance.OnInputArtistQ;
+        }
+
+        public void RemoveCallbacks(IPlayerArtistActions instance)
+        {
+            if (m_Wrapper.m_PlayerArtistActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerArtistActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerArtistActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerArtistActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerArtistActions @PlayerArtist => new PlayerArtistActions(this);
+
+    // PlayerDeveloper
+    private readonly InputActionMap m_PlayerDeveloper;
+    private List<IPlayerDeveloperActions> m_PlayerDeveloperActionsCallbackInterfaces = new List<IPlayerDeveloperActions>();
+    private readonly InputAction m_PlayerDeveloper_InputDeveloperY;
+    private readonly InputAction m_PlayerDeveloper_InputDeveloperR;
+    public struct PlayerDeveloperActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public PlayerDeveloperActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @InputDeveloperY => m_Wrapper.m_PlayerDeveloper_InputDeveloperY;
+        public InputAction @InputDeveloperR => m_Wrapper.m_PlayerDeveloper_InputDeveloperR;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerDeveloper; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerDeveloperActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerDeveloperActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerDeveloperActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerDeveloperActionsCallbackInterfaces.Add(instance);
+            @InputDeveloperY.started += instance.OnInputDeveloperY;
+            @InputDeveloperY.performed += instance.OnInputDeveloperY;
+            @InputDeveloperY.canceled += instance.OnInputDeveloperY;
+            @InputDeveloperR.started += instance.OnInputDeveloperR;
+            @InputDeveloperR.performed += instance.OnInputDeveloperR;
+            @InputDeveloperR.canceled += instance.OnInputDeveloperR;
+        }
+
+        private void UnregisterCallbacks(IPlayerDeveloperActions instance)
+        {
+            @InputDeveloperY.started -= instance.OnInputDeveloperY;
+            @InputDeveloperY.performed -= instance.OnInputDeveloperY;
+            @InputDeveloperY.canceled -= instance.OnInputDeveloperY;
+            @InputDeveloperR.started -= instance.OnInputDeveloperR;
+            @InputDeveloperR.performed -= instance.OnInputDeveloperR;
+            @InputDeveloperR.canceled -= instance.OnInputDeveloperR;
+        }
+
+        public void RemoveCallbacks(IPlayerDeveloperActions instance)
+        {
+            if (m_Wrapper.m_PlayerDeveloperActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerDeveloperActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerDeveloperActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerDeveloperActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerDeveloperActions @PlayerDeveloper => new PlayerDeveloperActions(this);
+
+    // PlayerDesigner
+    private readonly InputActionMap m_PlayerDesigner;
+    private List<IPlayerDesignerActions> m_PlayerDesignerActionsCallbackInterfaces = new List<IPlayerDesignerActions>();
+    private readonly InputAction m_PlayerDesigner_InputDesignerO;
+    private readonly InputAction m_PlayerDesigner_InputDesignerU;
+    public struct PlayerDesignerActions
+    {
+        private @PlayerInputActions m_Wrapper;
+        public PlayerDesignerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @InputDesignerO => m_Wrapper.m_PlayerDesigner_InputDesignerO;
+        public InputAction @InputDesignerU => m_Wrapper.m_PlayerDesigner_InputDesignerU;
+        public InputActionMap Get() { return m_Wrapper.m_PlayerDesigner; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PlayerDesignerActions set) { return set.Get(); }
+        public void AddCallbacks(IPlayerDesignerActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PlayerDesignerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PlayerDesignerActionsCallbackInterfaces.Add(instance);
+            @InputDesignerO.started += instance.OnInputDesignerO;
+            @InputDesignerO.performed += instance.OnInputDesignerO;
+            @InputDesignerO.canceled += instance.OnInputDesignerO;
+            @InputDesignerU.started += instance.OnInputDesignerU;
+            @InputDesignerU.performed += instance.OnInputDesignerU;
+            @InputDesignerU.canceled += instance.OnInputDesignerU;
+        }
+
+        private void UnregisterCallbacks(IPlayerDesignerActions instance)
+        {
+            @InputDesignerO.started -= instance.OnInputDesignerO;
+            @InputDesignerO.performed -= instance.OnInputDesignerO;
+            @InputDesignerO.canceled -= instance.OnInputDesignerO;
+            @InputDesignerU.started -= instance.OnInputDesignerU;
+            @InputDesignerU.performed -= instance.OnInputDesignerU;
+            @InputDesignerU.canceled -= instance.OnInputDesignerU;
+        }
+
+        public void RemoveCallbacks(IPlayerDesignerActions instance)
+        {
+            if (m_Wrapper.m_PlayerDesignerActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPlayerDesignerActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PlayerDesignerActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PlayerDesignerActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PlayerDesignerActions @PlayerDesigner => new PlayerDesignerActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -507,5 +825,20 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnSubmit(InputAction.CallbackContext context);
+    }
+    public interface IPlayerArtistActions
+    {
+        void OnInputArtistE(InputAction.CallbackContext context);
+        void OnInputArtistQ(InputAction.CallbackContext context);
+    }
+    public interface IPlayerDeveloperActions
+    {
+        void OnInputDeveloperY(InputAction.CallbackContext context);
+        void OnInputDeveloperR(InputAction.CallbackContext context);
+    }
+    public interface IPlayerDesignerActions
+    {
+        void OnInputDesignerO(InputAction.CallbackContext context);
+        void OnInputDesignerU(InputAction.CallbackContext context);
     }
 }

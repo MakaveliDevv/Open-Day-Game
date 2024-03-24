@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 { 
-    private PlayerInput _playerInput;
+    // private PlayerInput _playerInput;
     public Rigidbody2D rb;
     public float moveSpeed;
     private PlayerInputActions _playerActions;
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
 
     void Awake() 
     {
-        _playerInput = GetComponent<PlayerInput>();
+        // _playerInput = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody2D>();
         pManager = GetComponent<PlayerManager>();
         controller = GetComponentInChildren<Controller>();
@@ -41,9 +41,6 @@ public class PlayerController : MonoBehaviour
 
     void Update() 
     { 
-        // MovePlayer();
-        // MoveTestPlayer();
-
         Collider2D hit = Physics2D.OverlapCircle(castPosition.position, radius, layermask);
         if(hit != null) 
         {
@@ -114,32 +111,5 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(inputDirection.x * moveSpeed, rb.velocity.y);
         }
     }
-
     
-    // private void MoveArtist() 
-    // {
-    //     if(pManager.playerType == PlayerManager.PlayerType.ARTIST) 
-    //     {
-    //         Vector2 inputVector = _playerActions.Player.MovementArtist.ReadValue<Vector2>();
-    //         rb.AddForce(new Vector2(inputVector.x, inputVector.y) * moveSpeed, ForceMode2D.Force);
-    //     }
-    // }
-
-    // private void MoveDeveloper() 
-    // {
-    //     if(pManager.playerType == PlayerManager.PlayerType.DEVELOPER) 
-    //     {
-    //         Vector2 inputVector = _playerActions.Player.MovementDeveloper.ReadValue<Vector2>();
-    //         rb.AddForce(new Vector2(inputVector.x, inputVector.y) * moveSpeed, ForceMode2D.Force);
-    //     }
-    // }
-
-    // private void MoveDesigner() 
-    // {
-    //     if(pManager.playerType == PlayerManager.PlayerType.DESIGNER) 
-    //     {
-    //         Vector2 inputVector = _playerActions.Player.MovementDesigner.ReadValue<Vector2>();
-    //         rb.AddForce(new Vector2(inputVector.x, inputVector.y) * moveSpeed, ForceMode2D.Force);
-    //     }
-    // }
 }

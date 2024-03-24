@@ -6,7 +6,7 @@ public class Controller : MonoBehaviour
     [SerializeField] protected ScriptObject _scriptObj;
     protected PlayerController _player;
     protected Coroutine coroutine;
-    protected PlayerManager _playerManag;
+    public PlayerManager _playerManag;
     [SerializeField] protected DetectionPoint _detectPoint;
 
 
@@ -24,6 +24,7 @@ public class Controller : MonoBehaviour
     [SerializeField] public bool stopScalingCuzEndPointReached;
     public bool teleportedToEndPoint;
     protected bool objectCreated;
+    public bool isDestroyed;
 
     protected float timer;
     [SerializeField] protected float timeUntilScaleBack = 4f;
@@ -31,13 +32,13 @@ public class Controller : MonoBehaviour
     [SerializeField] private Vector3 teleportOffset;
 
 
-    void Awake() 
-    {
-        if(!TryGetComponent<PlayerManager>(out _playerManag)) 
-        {
-            Debug.LogError("PlayerManager component not found!");
-        }
-    }
+    // void Awake() 
+    // {
+    //     if(!TryGetComponent<PlayerManager>(out _playerManag)) 
+    //     {
+    //         Debug.LogError("PlayerManager component not found!");
+    //     }
+    // }
 
     void Start() 
     {
@@ -47,6 +48,7 @@ public class Controller : MonoBehaviour
 
     protected IEnumerator CreateObject() 
     {
+        isDestroyed = false;
         yield return new WaitForSeconds(2f);
 
         objectCreated = false;
@@ -101,14 +103,14 @@ public class Controller : MonoBehaviour
             Vector3 targetScale = initialScale + scaleFactor * Time.deltaTime * _targetDirection;
             _scaleObj.transform.localScale = targetScale;
             isExpanding = true;
-            Debug.Log("We are scaling!");
+            // Debug.Log("We are scaling!");
             
             _detectPoint = detectObj.GetComponent<DetectionPoint>();
 
             // // Check for connect points while scaling
             if (_detectPoint.PointDetected())
             {
-                Debug.Log("Point detected!, calling from controller script");
+                // Debug.Log("Point detected!, calling from controller script");
                 
                 // Stop scaling
                 FreezeScaling(_scaleObj, _scaleObj.transform.localScale);
@@ -122,23 +124,27 @@ public class Controller : MonoBehaviour
     {
         // isExpandingBack = false;
         float startTime = Time.time;
-        float journeyLength = Vector3.Distance(_startScale, _targetScale);           
+        float journeyLength = Vector3.Distance(_startScale, _targetScale);
 
-        while (_scaleObj.transform.localScale != _targetScale)
+        if(_scaleObj != null && !isDestroyed) 
         {
-            float journeyTime = Time.time - startTime;
-            float fracJourney = journeyTime * scaleFactor / journeyLength;
-            _scaleObj.transform.localScale = Vector3.Lerp(_startScale, _targetScale, Mathf.Clamp01(fracJourney));
+            while (_scaleObj.transform.localScale != _targetScale)
+            {
+                float journeyTime = Time.time - startTime;
+                float fracJourney = journeyTime * scaleFactor / journeyLength;
+                _scaleObj.transform.localScale = Vector3.Lerp(_startScale, _targetScale, Mathf.Clamp01(fracJourney));
 
-            isExpandingBack = true;
-            isExpanding = false;
+                isExpandingBack = true;
+                isExpanding = false;
 
-            yield return null;
-        }
+                yield return null;
+            }
 
-        // Ensure the scale is exactly the target scale when done
-        _scaleObj.transform.localScale = _targetScale;
-        isExpandingBack = false;
+            // Ensure the scale is exactly the target scale when done
+            _scaleObj.transform.localScale = _targetScale;
+            isExpandingBack = false;
+        }           
+
     }
 
     // SCALE BACK TOWARDS THE ENDPOINT
@@ -152,23 +158,26 @@ public class Controller : MonoBehaviour
         Vector3 targetScale = new(0, 1, 1);
         Point _point = startPointObj.GetComponent<Point>();
 
-        while (elapsedTime < duration)
+        if(_scaleObj != null) 
         {
-            // Interpolate between start and target scale
-            float t = elapsedTime / duration;
-            _scaleObj.transform.localScale = Vector3.Lerp(_startPosition, targetScale, t);
-            
-            if(_point.Moving(startPointObj.transform)) 
+            while (elapsedTime < duration)
             {
-                // Debug.Log("We are moving");
-                _player.playerRenderer.SetActive(false);
-            }
-            
-            // Increment elapsed time
-            elapsedTime += Time.deltaTime;
+                // Interpolate between start and target scale
+                float t = elapsedTime / duration;
+                _scaleObj.transform.localScale = Vector3.Lerp(_startPosition, targetScale, t);
+                
+                if(_point.Moving(startPointObj.transform)) 
+                {
+                    // Debug.Log("We are moving");
+                    _player.playerRenderer.SetActive(false);
+                }
+                
+                // Increment elapsed time
+                elapsedTime += Time.deltaTime;
 
-            yield return null;
-        }            
+                yield return null;
+            }            
+        }
 
         // Ensure the scale is exactly the target scale when done
         _scaleObj.transform.localScale = targetScale;
@@ -188,11 +197,13 @@ public class Controller : MonoBehaviour
         }
 
 
+
         if(DestroyGameObject(_instantiateObj)) 
         {
             DestroyGameObject(detectObj);
             DestroyGameObject(startPointObj);
             
+            isDestroyed = true;
             objectCreated = false;
             _point.isMoving = false;
             

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 475139a87bf36d6449d7ddefbc1340ec, type: 3}
-  m_Name: Object_Bridge
+  m_Name: Object_Artist
   m_EditorClassIdentifier: 
   object: {fileID: 856841965997008045, guid: 4fa6a2f7a5a34dc4eb3b68063d63fd1d, type: 3}
   detectObj: {fileID: 2194041748212303040, guid: 2995f5c9eba479244a24a698210017a2, type: 3}
