@@ -13,18 +13,14 @@ TagManager:
   - Extend_Point_1_Developer
   - Extend_Point_2_Developer
   - To_Extand_Back_Developer
-  - Start_Point_Developer
   - End_Point_Developer
-  - ExtendPoint1
-  - ExtendPoint2
-  - ToExtandBack
+  - Start_Point_Developer
   - DesignersObject
-  - StartPoint
   - Extend_Point_1_Designer
   - Extend_Point_2_Designer
   - To_Extand_Back_Designer
-  - Start_Point_Designer
   - End_Point_Designer
+  - Start_Point_Designer
   layers:
   - Default
   - TransparentFX
@@ -35,8 +31,8 @@ TagManager:
   - Platform
   - 
   - 
-  - GrapplingPlatform
-  - EndPoint
+  - 
+  - 
   - 
   - 
   - 

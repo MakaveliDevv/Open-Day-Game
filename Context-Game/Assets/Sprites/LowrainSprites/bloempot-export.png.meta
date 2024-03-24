@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bloempot-export_0: 888262086608560910
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

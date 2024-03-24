@@ -152,7 +152,9 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      spletters-export_0: 901286460987815769
+      spletters-export_1: 4137593270631270500
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

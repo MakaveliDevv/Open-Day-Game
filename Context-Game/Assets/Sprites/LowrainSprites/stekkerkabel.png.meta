@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      stekkerkabel_0: 2132357325791238202
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

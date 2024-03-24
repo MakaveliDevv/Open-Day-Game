@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      stekkerdoos_2_0: 1894860703639955267
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
