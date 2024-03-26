@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      kluisjes-export_0: -2842389555482027917
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      grijzeblob-export_0: 2425732560617160652
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

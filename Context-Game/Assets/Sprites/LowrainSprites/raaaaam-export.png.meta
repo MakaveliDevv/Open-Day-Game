@@ -128,7 +128,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      raaaaam-export_0: -9063668464986405523
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
